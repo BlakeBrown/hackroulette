@@ -8,7 +8,7 @@ var express = require('express'),
     cookieParser = require('cookie-parser'),
 	indico = require('indico.io');
 
-var settings = {
+var indico_settings = {
   "api_key": "04ad709a428e213f86e226d9610b2e86"
 };
 
@@ -26,7 +26,10 @@ app.use(cookieParser());
 app.use(expressSession({secret:'whatever'}));
 
 app.use(express.static(path.join(__dirname, '/public')));
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 
 app.get('/', function (req, res) {
 	res.sendFile(__dirname + '/public/index.html');
@@ -65,10 +68,15 @@ app.get('/auth/twitter/callback', function(req, res, next){
                 console.log(results);
                 res.send("worked. nice one.");
             }
-        }
-        );
-    } else
-        next(new Error("you're not supposed to be here."))
+        });
+    } else {
+        next(new Error("you're not supposed to be here."));
+    }
+});
+
+app.get('/tags', function(request, response) {
+  console.log(request.body);
+  response.send("hello");
 });
 
 http.listen(process.env.PORT || 3000, function() {
@@ -76,7 +84,7 @@ http.listen(process.env.PORT || 3000, function() {
 });
 
 var single = "Blog posts about Android tech make better journalism than most news outlets.";
-indico.textTags(single, settings)
+indico.textTags(single, indico_settings)
   .then(function(res) {
     //console.log(res);
   }).catch(function(err) {
@@ -88,7 +96,7 @@ var batch = [
   "We're supposed to get up to 24 inches of snow in the storm."
 ];
 
-indico.batchTextTags(batch, settings)
+indico.batchTextTags(batch, indico_settings)
   .then(function(res) {
     //console.log(res);
   }).catch(function(err) {
