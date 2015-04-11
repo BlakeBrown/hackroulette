@@ -1,0 +1,14 @@
+html {
+	margin:0px;
+	font-size: 14px;
+	font-family: Avenir Next;
+	background-color: #000;
+	color:#fff;
+}
+
+
+.joinButton {
+	background-color: #000;
+	color:#fff;
+	border: 2px solid red;
+}
