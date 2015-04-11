@@ -1,0 +1,126 @@
+.modalDialog {
+  position: fixed;
+  font-family: "Avenir Next",Avenir,sans-serif;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  text-align: center;
+  background: rgba(0,0,0,0.8);
+  background: rgb(0,0,0,0.8);
+  opacity:0;
+  z-index: 99999;
+  -webkit-transition: opacity 400ms ease-in;
+  -moz-transition: opacity 400ms ease-in;
+  transition: opacity 400ms ease-in;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.modalDialog:target {
+  opacity:1;
+  pointer-events: auto;
+}
+
+.modalTitle {
+  color:#24AA98;
+  position: relative;
+  z-index: 99999;
+}
+
+textarea.modaltextarea {
+  position: relative;
+  z-index: 99999;
+}
+
+button.buttonmodal{
+  position:relative;
+  z-index: 99999;
+}
+
+div.modalline {
+  background-color:#505050;
+  height:2px;
+  width:400px;
+  margin-right: auto;
+  margin-left: auto;
+  margin-top:20px;
+  margin-bottom:30px;
+  opacity:0.2;
+  position:relative;
+  z-index: 1000;
+}
+
+.linkedinmodal{
+  z-index: 1000;
+  position:relative;
+  margin-top:20px;
+  height:35px;
+  border:solid 2px rgba(78,155,184,0.3);
+  border:solid 2px rgb(78,155,184,0.3);
+  border-radius:5px;
+  box-shadow: 0px 0px 3px 3px rgba(78,155,184,0.3);
+  box-shadow: 0px 0px 3px 3px rgb(78,155,184,0.3);
+}
+
+img.modalbkgd{
+  position:absolute;
+  z-index: 2;
+  opacity:0.25;
+  height:80%;
+  top:20px;
+  right:165px;
+}
+
+img.modalbkgdprofile{
+  position:absolute;
+  z-index: 1;
+  opacity:0.25;
+  height:80%;
+  top:40px;
+  left:80px;
+
+}
+
+.modalText {
+  color:#505050;
+  z-index: 1000;
+  position:relative;
+}
+
+.modalDialog > div {
+  width: 500px;
+  position: relative;
+  margin: 10% auto;
+  padding: 10px 20px 13px 20px;
+  border-radius: 10px;
+  background: #9BE8FF;
+  overflow: hidden;
+/*  background: -moz-linear-gradient(#a7e8d4, #24AA98);
+  background: -webkit-linear-gradient(#a7e8d4, #24AA98);
+  background: -o-linear-gradient(#a7e8d4, #24AA98);*/
+}
+
+
+.close {
+  background: transparent;
+  color: #505050;
+  line-height: 25px;
+  position: absolute;
+  right: 0px;
+  text-align: center;
+  top: 0px;
+  width: 24px;
+  text-decoration: none;
+  font-weight: bold;
+  -webkit-border-radius: 12px;
+  -moz-border-radius: 12px;
+  border-radius: 12px;
+  -webkit-transition: color 400ms ease-in;
+  -moz-transition: color 400ms ease-in;
+  transition: color 400ms ease-in;
+}
+
+.close:hover { 
+  color:#fff;
+ }
