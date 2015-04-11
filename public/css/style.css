@@ -17,6 +17,19 @@ canvas{
 	vertical-align:bottom;
 }
 
+@font-face {
+    font-family: 'bebas';
+    src: url('bebas___-webfont.eot');
+    src: url('bebas___-webfont.eot?#iefix') format('embedded-opentype'),
+         url('bebas___-webfont.woff2') format('woff2'),
+         url('bebas___-webfont.woff') format('woff'),
+         url('bebas___-webfont.ttf') format('truetype'),
+         url('bebas___-webfont.svg#bebasregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
 #particles-js{
   height:100%;
   background:#000;
@@ -40,7 +53,9 @@ canvas{
 }
 
 .title{
-	font-size: 4em;
+	font-size: 5.5em;
+	font-family: 'bebas', Arial, Helvetica, sans-serif;
+	letter-spacing: 0.03em;
 }
 
 .subtitle{
