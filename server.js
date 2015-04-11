@@ -16,6 +16,10 @@ app.get('/', function (req, res) {
 	res.sendFile(__dirname + '/public/index.html');
 });
 
+app.get('/tags', function(req, res) {
+  console.log(req.body);
+});
+
 http.listen(process.env.PORT || 3000, function() {
 	console.log('listening on port 3000');
 });

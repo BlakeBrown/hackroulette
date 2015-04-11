@@ -2,46 +2,50 @@
 
 <html>
 
-<head>
-	<title> HackRoulette</title>
+	<head>
+		<title> HackRoulette</title>
 
-	<link rel="stylesheet" type="text/css" href="css/style.css">
-	<link rel="stylesheet" type="text/css" href="css/animate.css">
-	<link rel="stylesheet" type="text/css" href="css/modal.css">
+		<link rel="stylesheet" type="text/css" href="css/style.css">
+		<link rel="stylesheet" type="text/css" href="css/animate.css">
+		<link rel="stylesheet" type="text/css" href="css/modal.css">
 
-</head>
+	</head>
 
-<h1>HackRoulette - A chat roulette for the modern browser</h1>
+	<body>
+		<h1>HackRoulette - A chat roulette for the modern browser</h1>
 
-<input id="submit_btn" type="text">
+		<input id="submit_btn" type="text">
 
-<a href="#loginModal">
+		<a href="#loginModal">
 
-    <div class="joinButton">
+		    <div class="joinButton">
 
-    	Chat Now
-                           
-    </div>
+		    	Chat Now
+		                           
+		    </div>
 
-</a>
+		</a>
 
-<!-- Login Modal -->
+		<!-- Login Modal -->
 
-<div id="loginModal" class="modalDialog">
+		<div id="loginModal" class="modalDialog">
 
-    <div>
-             
-        <a href="#close" title="Close" class="close">x</a>
-        <p class='modalTitle'></p>
-        <div class="linkedin">
-            <a href="{{ url_for('login') }}"><img src="img/twitter.png" class="linkedinmodal"></a>
-        </div>
-        <br>
-        <div class="modalline"></div>
-        <p class="modalText">Log in with Twitter to join the fun.</p>
+		    <div>
+		             
+		        <a href="#close" title="Close" class="close">x</a>
+		        <p class='modalTitle'></p>
+		        <div class="linkedin">
+		            <a href="{{ url_for('login') }}"><img src="img/twitter.png" class="linkedinmodal"></a>
+		        </div>
+		        <br>
+		        <div class="modalline"></div>
+		        <p class="modalText">Log in with Twitter to join the fun.</p>
 
-    </div>
+		    </div>
 
-</div>
+		</div>
+	</body>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<script src="/js/script.js"></script>
 
 </html>
