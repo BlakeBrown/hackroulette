@@ -5,7 +5,7 @@ var express = require('express'),
 	bodyParser = require('body-parser'),
 	indico = require('indico.io');
 
-var settings = {
+var indico_settings = {
   "api_key": "04ad709a428e213f86e226d9610b2e86"
 };
 
@@ -21,7 +21,7 @@ http.listen(process.env.PORT || 3000, function() {
 });
 
 var single = "Blog posts about Android tech make better journalism than most news outlets.";
-indico.textTags(single, settings)
+indico.textTags(single, indico_settings)
   .then(function(res) {
     //console.log(res);
   }).catch(function(err) {
@@ -33,7 +33,7 @@ var batch = [
   "We're supposed to get up to 24 inches of snow in the storm."
 ];
 
-indico.batchTextTags(batch, settings)
+indico.batchTextTags(batch, indico_settings)
   .then(function(res) {
     //console.log(res);
   }).catch(function(err) {
