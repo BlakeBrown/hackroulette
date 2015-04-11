@@ -10,14 +10,18 @@ var indico_settings = {
 };
 
 app.use(express.static(path.join(__dirname, '/public')));
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 
 app.get('/', function (req, res) {
 	res.sendFile(__dirname + '/public/index.html');
 });
 
-app.get('/tags', function(req, res) {
-  console.log(req.body);
+app.get('/tags', function(request, response) {
+  console.log(request.body);
+  response.send("hello");
 });
 
 http.listen(process.env.PORT || 3000, function() {
