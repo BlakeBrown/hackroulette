@@ -20,8 +20,8 @@ app.get('/', function (req, res) {
 });
 
 app.get('/tags', function(request, response) {
-  console.log(request.body);
-  response.send("hello");
+  console.log(request.query);
+  response.end("hello");
 });
 
 http.listen(process.env.PORT || 3000, function() {

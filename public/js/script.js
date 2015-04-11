@@ -6,7 +6,12 @@ $(document).ready(function() {
 
     		var data = {};
 				data.title = "title";
-				data.message = "message";
+				data.message = value;
+				console.log(data);
+        $.get('tags', {body: data})
+          .done(function(res) {
+            console.log(data)
+        });
 
 	    	// $.ajax({
 	    	// 	method: "get",
@@ -23,7 +28,7 @@ $(document).ready(function() {
 	    	// 	}
 	    	// });
 
-	    	$.get("tags", "hello");
+	    	// $.get("tags", "hello");
 	    }
 	});
 
