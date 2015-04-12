@@ -178,6 +178,7 @@ canvas{
 	position: absolute;
 	top:2vh;
 	right:29vw;
+	width:120px;
 	display: inline-block;
 	z-index: 2;
 	color:white;
@@ -233,3 +234,10 @@ canvas{
 	font-size: 1.2em;
 }
 
+.crystal{
+	width:100px;
+}
+
+.stand{
+	width:100px;
+}
