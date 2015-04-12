@@ -8,54 +8,66 @@
 		<link rel="stylesheet" type="text/css" href="css/style.css">
 		<link rel="stylesheet" type="text/css" href="css/animate.css">
 		<link rel="stylesheet" type="text/css" href="css/modal.css">
+		<link rel="stylesheet" type="text/css" href="css/chat.css">
 
 	</head>
 
 	<body>
+	
+		<section data-route='home'>
+			<div id="particles-js"></div>
 
-	<section data-route='home'>
-		<div id="particles-js"></div>
+			<div class="window">
 
-		<div class="window">
+				<div class="contentContainer">
 
-			<div class="contentContainer">
+					<h1 class="title"> HackRoulette</h1>
 
-				<h1 class="title"> HackRoulette</h1>
+					<h1 class="subtitle">A chat roulette for the modern browser</h1>
 
-				<h1 class="subtitle">A chat roulette for the modern browser</h1>
-
-				<a href="#loginModal">
-				<div class="joinBuffer">
-				    <div class="joinButton">
-				    	Chat Now
-				    </div>
+					<a href="#loginModal">
+					<div class="joinBuffer">
+					    <div class="joinButton">
+					    	Chat Now
+					    </div>
+					</div>
+					</a>
 				</div>
-				</a>
 			</div>
-		</div>
 
-	<!-- Login Modal -->
-		<div id="loginModal" class="modalDialog">
-		   <div>
-		        <a href="#close" title="Close" class="close">x</a>
-		        <p class='modalTitle'></p>
-		        <div class="linkedin">
-		            <a href="auth/twitter"><img src="img/twitter.png" class="linkedinmodal"></a>
-		        </div>
-		        <br>
-		        <div class="modalline"></div>
-		        <p class="modalText">Log in with Twitter to join the fun.</p>
-		    </div>
-		</div>
-  </section>
+		<!-- Login Modal -->
+			<div id="loginModal" class="modalDialog">
+			   <div>
+			        <a href="#close" title="Close" class="close">x</a>
+			        <p class='modalTitle'></p>
+			        <div class="linkedin">
+			            <a href="auth/twitter"><img src="img/twitter.png" class="linkedinmodal"></a>
+			        </div>
+			        <br>
+			        <div class="modalline"></div>
+			        <p class="modalText">Log in with Twitter to join the fun.</p>
+			    </div>
+			</div>
+		</section>
 
-  <section data-route='waitingRoom'>
-    <h1> WELCOME TO PURGATORY BITCHES! </h1>
-  </section>
-	<script src="js/jquery.min.js"></script>
-  <script src='js/director.min.js'></script>
-	<script src="js/particle.js"></script>
-	<script src="js/index.js"></script>
-  <script src="js/script.js"></script>
+		<section data-route='waitingRoom'>
+			<div style="padding:10px; width:110vw;  " id="chatTop">
+
+			    <ul id="messages"></ul>
+			    <form action="">
+			      <input id="m" autocomplete="off" /><button>Send</button>
+			    </form>
+
+			</div>
+		</section>
+
+		<script src="js/jquery.min.js"></script>
+		<script src='js/director.min.js'></script>
+		<script src="js/particle.js"></script>
+		<script src="js/index.js"></script>
+		<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+		<script src="js/chat.js"></script>
+		<script src="js/router.js"></script>
+		<script src="js/script.js"></script>
 	</body>
 </html>
