@@ -1,9 +1,10 @@
 form { 
 	background: #1296E0;
 	bottom: 5vh; 
-	margin-left:5%; 
+	width:100vw;
 	position: fixed; 
 	font-family: Avenir Next;
+	text-align: center;
 }
 form input { 
 	border: 0; 
@@ -17,8 +18,8 @@ form button {
 	background: rgb(130, 224, 255); 
 	border: none; 
 	margin-left: 5px;
-	padding-top: 7px;
-	padding-bottom: 7px;
+	padding-top: 9px;
+	padding-bottom: 9px;
 	display: inline-block;
 	border-radius: 5px;
 	font-family: Avenir Next;
@@ -30,30 +31,35 @@ form button {
 }
 
 .messageContainer{
-	max-height:80vh;
+	max-height:73vh;
+	width: 100vw;
 	overflow: hidden;
 	overflow-y:auto;
+	text-align: center;
 }
 
 #messages { 
 	list-style-type: none;  
-	padding-left: 10px; 
+	margin:0;
+	padding:0;
 	padding-top:10px;
-	padding-left:10px;
+
 	color:black;
 	white-space:pre-wrap; 
+	width:100vw;
+	display: inline-block;
+}
+
+#messages li { 
+	padding:5px;
 	width:80vw;
 	display: inline-block;
 	text-align: left;
 }
-#messages li { 
-	padding: 5px;
-	padding-left: 10px; 
-	width:80vw;
-	display: inline-block;
-}
+
 #messages li:nth-child(odd) {
 	background: #eee;
+	text-align: left;
 }
 #chat{
 	background-color:blue;
@@ -91,4 +97,17 @@ form button {
 .nextChat:hover{
 	color:#052d43;
 	cursor: pointer;
+}
+
+.topic{
+	width:80vw;
+	display: inline-block;
+	background-color: #FF8DD1;
+	color:white;
+	margin-top:5px;
+	margin-bottom:5px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	border-radius: 100px;
+	border: 2px solid #FF8DD1;
 }
