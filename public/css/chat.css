@@ -6,15 +6,17 @@ form {
 	font-family: Avenir Next;
 	text-align: center;
 }
-input .formInput { 
+.formInput { 
 	border: 0; 
 	padding: 10px; 
-	width: 80vw; 
+	width: 70vw; 
 	display: inline-block;
 	font-family: Avenir Next;  
 }
-input .formButton { 
-	width: 10px;
+
+
+.formButton { 
+	width: 10vw;
 	background: rgb(130, 224, 255); 
 	border: none; 
 	margin-left: 5px;
@@ -35,19 +37,18 @@ input .formButton {
 	width: 100vw;
 	overflow: hidden;
 	overflow-y:auto;
-	text-align: left;
+	text-align: center;
 }
 
-#messages { 
-	list-style-type: none;  
+#conversation { 
 	margin:0;
 	padding:0;
 	padding-top:10px;
-
-	color:black;
+	color:white;
 	white-space:pre-wrap; 
-	width:100vw;
+	width:80vw;
 	display: inline-block;
+	text-align: left
 }
 
 #messages li { 
