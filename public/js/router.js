@@ -30,6 +30,7 @@ $(document).ready(function() {
                 delete list[tops[i]];
               }
               console.log(tops);
+                $('.dataText').html('');
                 $('.dataText').append("<strong>The hacking wizards sense that you are interested in:</strong><br>");
               for(var i = 0; i < 5; i++){
                 $('.dataText').append(document.createTextNode(tops[i]),"<br>");
