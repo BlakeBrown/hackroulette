@@ -19,6 +19,12 @@ var main = function() {
 
     $('.window').waypoint(function() {
     setTimeout(function() {
+      $('.joinButtonBuffer').addClass('animated fadeIn').css('visibility','visible');
+      },1000);
+  }, {offset:'0px'});
+
+    $('.window').waypoint(function() {
+    setTimeout(function() {
       $('.loadingLine').addClass('animated pulse').css('visibility','visible');
       },1000);
   }, {offset:'0px'});

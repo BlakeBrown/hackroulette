@@ -86,6 +86,7 @@ img.modalbkgdprofile{
   color:#505050;
   z-index: 1000;
   position:relative;
+  margin-bottom:20px;
 }
 
 .modalDialog > div {

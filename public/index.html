@@ -5,12 +5,13 @@
 	<head>
 		<title>HackRoulette</title>
 
-		<link rel="stylesheet" type="text/css" href="css/style.css">
+
 		<link rel="stylesheet" type="text/css" href="css/animate.css">
 		<link rel="stylesheet" type="text/css" href="css/modal.css">
 		<link rel="icon" href="img/favicon.png">
 		<link rel="stylesheet" type="text/css" href="css/chat.css">
 		<link rel="stylesheet" type="text/css" href="css/pace.css">
+		<link rel="stylesheet" type="text/css" href="css/style.css">
 
 
 	</head>
@@ -26,7 +27,7 @@
 
 					<h1 class="title"> HackRoulette</h1>
 
-					<h1 class="subtitle">A chat roulette for the modern browser</h1>	
+					<h1 class="subtitle">a chat roulette for the modern browser</h1>	
 
 					<div class="joinBuffer">
 
@@ -34,9 +35,15 @@
 
 					    <div class="joinButton">
 
-					    	Chat Now
+					    	<div class="joinButtonBuffer">
+
+					    		Chat Now
+
+					
 
 					    	<div class="skew">
+					    	</div>
+
 					    	</div>
 					                           
 					    </div>
@@ -78,30 +85,34 @@
 
 						<div class="dataText">
 
-							Hello Mr. Conservative!<br><br>
+							Welcome Mr. Conservative!<br><br>
 							Currently matching you with someone who is interested in Ponies and Rainbows.
 
 						</div>
 
 						<div class="loadingText" id="loadingText">
 
-							loading
+							Loading ...
 
 						</div>
 
-						<div class="pace">
-						</div>
+						<!--<div class="pace">
+						</div>-->
 
 					</div>
 
 					<div class="joinBuffer">
 
 
-						<div class="startButton" style="visibility:visible">
+						<div class="startButton">
+
+							<div class="startButtonBuffer">
 
 							Start Now
 
 							<div class="skew">
+					    	</div>
+
 					    	</div>
 
 						</div>
@@ -118,12 +129,17 @@
 
 		<section data-route="chatRoom">
 
-			<div style="padding:10px; width:110vw" id="chatTop">
+			<div class="window" style="background-color: #1296E0;">
 
-			    <ul id="messages"></ul>
-			    <form action="">
-			      <input id="m" autocomplete="off" /><button>Send</button>
-			    </form>
+				<div id="chatTop">
+
+				    <ul id="messages"></ul>
+
+				    <form action="">
+				      <input id="m" autocomplete="off" /><button>Send</button>
+				    </form>
+
+				</div>
 
 			</div>
 
@@ -132,7 +148,7 @@
 
 		<script src="js/jquery.min.js"></script>
 		<script src="js/waypoint.js"></script>
-		<script src="js/pace.js"></script>
+		<!--<script src="js/pace.js"></script>-->
 		<script src='js/director.min.js'></script>
 		<script src="js/particle.js"></script>
 		<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
