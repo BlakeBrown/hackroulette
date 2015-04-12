@@ -19,18 +19,19 @@ function slide() {
     window.setInterval(function () {
 
     setTimeout(function() {
-      $('.loadingText').removeClass('fadeOut');
-      $('.loadingText').addClass('animated fadeIn').css('visibility','visible');
+      $('.crystal').removeClass('fadeOut');
+      $('.crystal').addClass('animated fadeIn').css('visibility','visible');
+      $('.crystal').animate({transform: "translateY(-10%)"});
       },num);
 
-    num = num+500
+    num = num+800
 
     setTimeout(function() {
-      $('.loadingText').removeClass('fadeIn');
-      $('.loadingText').addClass('fadeOut');
+      $('.crystal').removeClass('fadeIn');
+      $('.crystal').addClass('fadeOut');
       },num);
 
-    }, 500);
+    }, 800);
 }
 
 function startButton() {

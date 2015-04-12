@@ -66,7 +66,7 @@ canvas{
 	font-weight:100;
 	font-size: 1.5em;
 	visibility: hidden;
-	margin-top:7vh;
+	margin-top:5vh;
 }
 
 .joinBuffer {
@@ -176,8 +176,9 @@ canvas{
 
 .loadingText{
 	position: absolute;
-	top:2vh;
+	top:0;
 	right:29vw;
+	width:120px;
 	display: inline-block;
 	z-index: 2;
 	color:white;
@@ -193,6 +194,8 @@ canvas{
 	position: relative;
 	top:0;
 	left:0;
+	text-decoration: none;
+	color:#fff;
 }
 
 .startButtonBuffer{
@@ -210,6 +213,7 @@ canvas{
 	top:-2px;
 	left:-1px;
 	transition: 0.3s all linear;
+	text-decoration: none;
 }
 
 .startButton:hover{
@@ -226,10 +230,17 @@ canvas{
 
 .dataText{
 	position: absolute;
-	top:1vh;
+	top:-2vh;
 	left:28vw;
 	width:20vw;
 	text-align: left;
-	font-size: 1.2em;
+	font-size: 1.1em;
 }
 
+.crystal{
+	width:100px;
+}
+
+.stand{
+	width:100px;
+}
