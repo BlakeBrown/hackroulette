@@ -28,5 +28,6 @@ $(document).ready(function() {
     on: allroutes
   });
   router.init();
-  router.setRoute('/home');
+  if (window.location.hash.slice(2).length === 0)
+    router.setRoute('/home');
 });
