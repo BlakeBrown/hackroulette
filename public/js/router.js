@@ -1,6 +1,6 @@
 $(document).ready(function() {
   // ROUTES
-  var socket = io('http://localhost');
+  var socket = io();
   var index = function() {
     console.log('welcome!');
   };

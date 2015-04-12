@@ -1,9 +1,10 @@
 form { 
 	background: #1296E0;
 	bottom: 5vh; 
-	margin-left:5%; 
+	width:100vw;
 	position: fixed; 
 	font-family: Avenir Next;
+	text-align: center;
 }
 form input { 
 	border: 0; 
@@ -17,29 +18,108 @@ form button {
 	background: rgb(130, 224, 255); 
 	border: none; 
 	margin-left: 5px;
-	padding-top: 7px;
-	padding-bottom: 7px;
+	padding-top: 9px;
+	padding-bottom: 9px;
 	display: inline-block;
 	border-radius: 5px;
 	font-family: Avenir Next;
 	font-size:0.9em;
 }
+
+.formButton:hover{
+	cursor: pointer;
+}
+
+.messageContainer{
+	max-height:73vh;
+	width: 100vw;
+	overflow: hidden;
+	overflow-y:auto;
+	text-align: center;
+}
+
 #messages { 
 	list-style-type: none;  
-	padding: 0; 
+	margin:0;
+	padding:0;
+	padding-top:10px;
+
 	color:black;
 	white-space:pre-wrap; 
-	width:80vw;
+	width:100vw;
 	display: inline-block;
 }
+
 #messages li { 
-	padding: 5px;
+	padding:5px;
 	width:80vw;
 	display: inline-block;
+	text-align: left;
 }
+
 #messages li:nth-child(odd) {
 	background: #eee;
+	text-align: left;
 }
 #chat{
 	background-color:blue;
+}
+#users_waiting_wrapper {
+	position: absolute;
+	left: 85vw;
+	top: -40vh;
+}
+#users_waiting_list {
+	list-style-type: none;
+	padding: 0;
+	text-align: left;
+}
+#client_list_item {
+	color: #FFDD2E;
+}
+.header {
+	width:100vw;
+	position: relative;
+	top:0;
+	left:0;
+	height:50px;
+}
+
+.logo{
+	position: absolute;
+	top:20px;
+	left:6vw;
+	font-family: 'bebas';
+	font-size: 1.3em;
+	transition: all 0.2s linear;
+}
+
+.logo:hover{
+	color:#052d43;
+	cursor: pointer;
+}
+
+.nextChat{
+	position: absolute;
+	top:20px;
+	right:6vw;
+	transition: all 0.2s linear;
+}
+
+.nextChat:hover{
+	color:#052d43;
+	cursor: pointer;
+}
+
+.topic {
+	width:80vw;
+	display: inline-block;
+	background-color: #FF8DD1;
+	color:white;
+	margin-top:5px;
+	margin-bottom:5px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	border-radius: 100px;
+	border: 2px solid #FF8DD1;
 }

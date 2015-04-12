@@ -17,6 +17,7 @@
 
 	<body>
 		<section data-route='home'>
+
 			<div id="particles-js"></div>
 
 			<div class="window">
@@ -59,6 +60,7 @@
 		        	<p class="modalText">Sign away your soul.</p>
 			    </div>
 			</div>
+
 		</section>
 		<section data-route='waitingRoom'>
 			<div class="window">
@@ -69,6 +71,11 @@
 						<div class="dataText">
 							Hello Mr. Conservative!<br><br>
 							Currently matching you with someone who is interested in Ponies and Rainbows.
+						</div>
+						<div id="users_waiting_wrapper">
+							<h1>Users waiting</h1>
+							<ul id="users_waiting_list">
+							</ul>
 						</div>
 						<div class="loadingText" id="loadingText">
 							loading
@@ -81,8 +88,8 @@
 
 							Start Now
 
-							<div class="skew">
-					    	</div>
+								<div class="skew">
+						    	</div>
 
 						</button>
 
@@ -98,11 +105,42 @@
 		<section data-route="chatRoom">
 
 			<div style="padding:10px; width:110vw" id="chatTop">
+				<div class="header">
 
-			    <ul id="messages"></ul>
-			    <form action="">
-			      <input id="m" autocomplete="off" /><button>Send</button>
-			    </form>
+					<div class="logo">
+						HACKROULETTE
+					</div>
+
+					<div class="nextChat">
+
+						New Chat >
+
+					</div>
+
+				</div>
+
+				<div class="topic">
+
+					Is it ethical to get an abortion?
+
+				</div>
+
+				<div id="chatTop">
+
+					<div class="messageContainer">
+
+				    	<ul id="messages"></ul>
+
+				    </div>
+
+				    <form action="">
+
+				      <input id="m" autocomplete="off" />
+				      <button class="formButton">Send</button>
+
+				    </form>
+
+				</div>
 
 			</div>
 

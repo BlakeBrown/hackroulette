@@ -32,7 +32,8 @@ canvas{
 }
 
 #particles-js{
-  width:100vw;
+  min-width:100vw;
+  min-height: 100vh;
   background:#1296E0;
   opacity:0.3;
 }
