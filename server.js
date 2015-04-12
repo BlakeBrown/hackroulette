@@ -123,7 +123,7 @@ app.get('/interests', function(req, res1) {
 var usernames = {};
 
 // rooms which are currently available in chat
-var rooms = ['room1','room2','room3'];
+var rooms = ['waiting_room','room2','room3'];
 
 io.sockets.on('connection', function (socket) {
     
@@ -134,6 +134,7 @@ io.sockets.on('connection', function (socket) {
         var chance = new Chance();
         var username = chance.name(); 
 
+        // console.log(Object.keys(usernames).length % 2);
         socket.username = username;
         // Update the client to let him to know he/she joined
         socket.emit('client_joined_waiting_room', username);
@@ -146,14 +147,20 @@ io.sockets.on('connection', function (socket) {
         usernames[username] = username;
 
         // store the room name in the socket session for this client
-        socket.room = 'room1';
+        socket.room = 'waiting_room';
         // send client to room 1
-        socket.join('room1');
+        socket.join('waiting_room');
         // echo to client they've connected
-        socket.emit('updatechat', 'SERVER', 'you have connected to room1');
+        socket.emit('updatechat', 'SERVER', 'you have connected to waiting_room');
         // echo to room 1 that a person has connected to their room
-        socket.broadcast.to('room1').emit('updatechat', 'SERVER', username + ' has connected to this room');
-        socket.emit('updaterooms', rooms, 'room1');
+        socket.broadcast.to('waiting_room').emit('updatechat', 'SERVER', username + ' has connected to this room');
+        socket.emit('updaterooms', rooms, 'waiting_room');
+
+        var num_users = Object.keys(usernames).length;
+        console.log(num_users);
+        if(num_users % 2 == 0 && num_users!=0) {
+            console.log("New room");
+        }
     });
     
     // when the client emits 'sendchat', this listens and executes
