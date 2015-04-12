@@ -121,13 +121,11 @@ canvas{
 /* ------------- LOADING PAGE ----------- */
 
 .lineBuffer {
-	margin-top:20px;
-	margin-bottom:20px;
+	height:30vh;
 	width:100vw;
 	position: relative;
 	top:0;
 	left:0;
-	height:18vh;
 }
 
 .loadingLine{
@@ -146,12 +144,12 @@ canvas{
 
 .loadingText{
 	position: absolute;
-	top:50%;
-	left:50%;
+	top:25%;
+	right:28vw;
 	transform: translateY(-50%) translateX(-50%);
 	display: inline-block;
 	z-index: 2;
-	color:red;
+	color:white;
 }
 
 .startButton{
