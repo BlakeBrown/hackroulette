@@ -8,7 +8,8 @@ var express = require('express'),
     passport = require('passport'),
     TwitterStrategy = require('passport-twitter').Strategy,
 	indico = require('indico.io'),
-    Twitter = require('twitter');
+    Twitter = require('twitter'), 
+    io = require('socket.io')(http);
 
 
 var indico_settings = {
@@ -109,3 +110,15 @@ indico.batchPolitical(batch, indico_settings)
   }).catch(function(err) {
     console.warn(err);
   });
+
+// =============== CHAT ROOM W/ SOCKET.IO ==================
+io.on('connection', function(socket){
+    console.log("A user connected");
+    socket.on('chat message', function(msg){
+        console.log("Message: " + msg);
+        io.emit('chat message', msg);
+    });
+    socket.on('disconnect', function(){
+        console.log('user disconnected');
+    });
+});

@@ -8,6 +8,7 @@
 		<link rel="stylesheet" type="text/css" href="css/style.css">
 		<link rel="stylesheet" type="text/css" href="css/animate.css">
 		<link rel="stylesheet" type="text/css" href="css/modal.css">
+		<link rel="stylesheet" type="text/css" href="css/chat.css">
 
 	</head>
 
@@ -49,13 +50,22 @@
 		</div>
   </section>
 
-  <section data-route='waitingRoom'>
-    <h1> WELCOME TO PURGATORY BITCHES! </h1>
-  </section>
+	<section data-route='waitingRoom'>
+		<div style="padding:10px; width:110vw;  " id="chatTop">
+
+		    <ul id="messages"></ul>
+		    <form action="">
+		      <input id="m" autocomplete="off" /><button>Send</button>
+		    </form>
+
+		</div>
+	</section>
 	<script src="js/jquery.min.js"></script>
-  <script src='js/director.min.js'></script>
+	<script src='js/director.min.js'></script>
 	<script src="js/particle.js"></script>
 	<script src="js/index.js"></script>
-  <script src="js/script.js"></script>
+	<script src="js/script.js"></script>
+	<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+	<script src="js/chat.js"></script>
 	</body>
 </html>
