@@ -3,8 +3,8 @@
   height: 300px;
   position: absolute;
   top: 40vh;
-  right: 24vw;
-  z-index: 2000;
+  right: 27vw;
+  z-index: 2;
   -webkit-transform: scale(0);
   -moz-transform: scale(0);
   -ms-transform: scale(0);
@@ -32,7 +32,7 @@
   background: #7adcf9;
   position: absolute;
   top: 0;
-  z-index: 1911;
+  z-index: 2;
   -webkit-animation: pace-bounce 1s infinite;
   -moz-animation: pace-bounce 1s infinite;
   -o-animation: pace-bounce 1s infinite;
@@ -45,7 +45,7 @@
   display: block;
   left: 50%;
   bottom: 0;
-  z-index: 1910;
+  z-index: 2;
   margin-left: -30px;
   width: 60px;
   height: 75px;

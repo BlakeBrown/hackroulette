@@ -27,7 +27,7 @@
 
 					<h1 class="title"> HackRoulette</h1>
 
-					<h1 class="subtitle">A chat roulette for the modern browser</h1>	
+					<h1 class="subtitle">a chat roulette for the modern browser</h1>	
 
 					<div class="joinBuffer">
 
@@ -35,9 +35,15 @@
 
 					    <div class="joinButton">
 
-					    	Chat Now
+					    	<div class="joinButtonBuffer">
+
+					    		Chat Now
+
+					
 
 					    	<div class="skew">
+					    	</div>
+
 					    	</div>
 					                           
 					    </div>
@@ -90,8 +96,8 @@
 
 						</div>
 
-						<div class="pace">
-						</div>
+						<!--<div class="pace">
+						</div>-->
 
 					</div>
 
@@ -123,12 +129,17 @@
 
 		<section data-route="chatRoom">
 
-			<div style="padding:10px; width:110vw" id="chatTop">
+			<div class="window" style="background-color: #1296E0;">
 
-			    <ul id="messages"></ul>
-			    <form action="">
-			      <input id="m" autocomplete="off" /><button>Send</button>
-			    </form>
+				<div id="chatTop">
+
+				    <ul id="messages"></ul>
+
+				    <form action="">
+				      <input id="m" autocomplete="off" /><button>Send</button>
+				    </form>
+
+				</div>
 
 			</div>
 
@@ -137,7 +148,7 @@
 
 		<script src="js/jquery.min.js"></script>
 		<script src="js/waypoint.js"></script>
-		<script src="js/pace.js"></script>
+		<!--<script src="js/pace.js"></script>-->
 		<script src='js/director.min.js'></script>
 		<script src="js/particle.js"></script>
 		<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
