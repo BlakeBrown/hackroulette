@@ -194,7 +194,7 @@ io.sockets.on('connection', function (socket) {
       users.push(uid);
       console.log('uid:'+uid+' '+'count:'+usercount);
       if (usercount>1) {
-        socket.emit('enable start button');
+        socket.emit('enable_start_button');
       }
     });
 
