@@ -44,7 +44,8 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.get('/auth/twitter', passport.authenticate('twitter'));
-app.get('/auth/twitter/callback', passport.authenticate('twitter', { successRedirect: '/tweets', failureRedirect: '/login' }));
+app.get('/auth/twitter/callback', passport.authenticate('twitter', { successRedirect: '/#/waitingRoom', failureRedirect: '/login' }));
+
 
 app.get('/tweets', function(req, res) {
     if(!req.user) { return res.redirect('/'); }
@@ -63,8 +64,8 @@ app.get('/tweets', function(req, res) {
                 words.push(tweets[i].text);
             }
             res.send(words);
-            console.log(words.length);
-            //res.send(tweets);
+            console.log(words);
+            crunch(words);
         }
     });
 });
@@ -78,14 +79,6 @@ http.listen(process.env.PORT || 3000, function() {
 	console.log('listening on port 3000');
 });
 
-var single = "Blog posts about Android tech make better journalism than most news outlets.";
-indico.textTags(single, indico_settings)
-  .then(function(res) {
-    //console.log(res);
-  }).catch(function(err) {
-    console.warn(err);
-  });
-
 var batch = [
     "Finally here! Eric Schmidt being the first keynote speaker.",
     "This is a second tweet",
@@ -94,7 +87,8 @@ var batch = [
 
 // Currently takes in a batch of strings and averages the values into a javascript object
 // Can also use indico.batchTextTags
-indico.batchPolitical(batch, indico_settings)
+function crunch(words){
+indico.batchTextTags(words, indico_settings)
   .then(function(res) {
     
     var objects = res;
@@ -124,7 +118,7 @@ indico.batchPolitical(batch, indico_settings)
   }).catch(function(err) {
     console.warn(err);
   });
-
+}
 // =============== CHAT ROOM W/ SOCKET.IO ==================
 io.on('connection', function(socket){
     console.log("A user connected");
