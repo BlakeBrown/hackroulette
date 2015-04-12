@@ -3,12 +3,15 @@
 <html>
 
 	<head>
-		<title> HackRoulette</title>
+		<title>HackRoulette</title>
 
 		<link rel="stylesheet" type="text/css" href="css/style.css">
 		<link rel="stylesheet" type="text/css" href="css/animate.css">
 		<link rel="stylesheet" type="text/css" href="css/modal.css">
+		<link rel="icon" href="img/favicon.png">
 		<link rel="stylesheet" type="text/css" href="css/chat.css">
+		<link rel="stylesheet" type="text/css" href="css/pace.css">
+
 
 	</head>
 
@@ -23,35 +26,99 @@
 
 					<h1 class="title"> HackRoulette</h1>
 
-					<h1 class="subtitle">A chat roulette for the modern browser</h1>
+					<h1 class="subtitle">A chat roulette for the modern browser</h1>	
 
-					<a href="#loginModal">
 					<div class="joinBuffer">
+
+						<a href="#loginModal">
+
 					    <div class="joinButton">
+
 					    	Chat Now
+
+					    	<div class="skew">
+					    	</div>
+					                           
 					    </div>
-					</div>
-					</a>
+
+					    </a>
+
+					</div>	
 				</div>
+
 			</div>
 
 		<!-- Login Modal -->
 			<div id="loginModal" class="modalDialog">
 			   <div>
 			        <a href="#close" title="Close" class="close">x</a>
-			        <p class='modalTitle'></p>
-			        <div class="linkedin">
-			            <a href="auth/twitter"><img src="img/twitter.png" class="linkedinmodal"></a>
-			        </div>
-			        <br>
-			        <div class="modalline"></div>
-			        <p class="modalText">Log in with Twitter to join the fun.</p>
+		       		<p class='modalTitle'></p>
+		        	<div class="linkedin">
+		            	<a href="{{ url_for('login') }}"><img src="img/twitter.png" class="linkedinmodal"></a>
+		        	</div>
+		        	<br>
+		        	<div class="modalline"></div>
+		        	<p class="modalText">Sign away your soul.</p>
 			    </div>
 			</div>
 		</section>
-
+		             		      
 		<section data-route='waitingRoom'>
-			<div style="padding:10px; width:110vw;  " id="chatTop">
+			
+			<div class="window">
+
+				<div class="backgroundColor">
+				</div>
+
+				<div class="contentContainer">
+
+					<h1 class="title">HackRoulette</h1>
+
+					<div class="lineBuffer">
+
+						<div class="dataText">
+
+							Hello Mr. Conservative!<br><br>
+							Currently matching you with someone who is interested in Ponies and Rainbows.
+
+						</div>
+
+						<div class="loadingText" id="loadingText">
+
+							loading
+
+						</div>
+
+						<div class="pace">
+						</div>
+
+					</div>
+
+					<div class="joinBuffer">
+
+
+						<div class="startButton" style="visibility:visible">
+
+							Start Now
+
+							<div class="skew">
+					    	</div>
+
+						</div>
+
+					</div>
+
+				</div>
+
+			</div>
+
+			
+
+		</section>
+
+		<section data-route="chatRoom">
+
+			<div style="padding:10px; width:110vw" id="chatTop">
 
 			    <ul id="messages"></ul>
 			    <form action="">
@@ -59,15 +126,20 @@
 			    </form>
 
 			</div>
+
 		</section>
 
+
 		<script src="js/jquery.min.js"></script>
+		<script src="js/waypoint.js"></script>
+		<script src="js/pace.js"></script>
 		<script src='js/director.min.js'></script>
 		<script src="js/particle.js"></script>
-		<script src="js/index.js"></script>
 		<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
 		<script src="js/chat.js"></script>
 		<script src="js/router.js"></script>
 		<script src="js/script.js"></script>
+		<script src="js/index.js"></script>
+		<script src="js/loading.js"></script>
 	</body>
 </html>
