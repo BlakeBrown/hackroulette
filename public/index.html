@@ -19,6 +19,7 @@
 	<body>
 	
 		<section data-route='home'>
+
 			<div id="particles-js"></div>
 
 			<div class="window">
@@ -61,13 +62,14 @@
 			        <a href="#close" title="Close" class="close">x</a>
 		       		<p class='modalTitle'></p>
 		        	<div class="linkedin">
-		            	<a href="{{ url_for('login') }}"><img src="img/twitter.png" class="linkedinmodal"></a>
+		            	<a href="auth/twitter"><img src="img/twitter.png" class="linkedinmodal"></a>
 		        	</div>
 		        	<br>
 		        	<div class="modalline"></div>
 		        	<p class="modalText">Sign away your soul.</p>
 			    </div>
 			</div>
+
 		</section>
 		             		      
 		<section data-route='waitingRoom'>
@@ -116,8 +118,8 @@
 
 							Start Now
 
-							<div class="skew">
-					    	</div>
+								<div class="skew">
+						    	</div>
 
 					    	</div>
 
@@ -136,14 +138,43 @@
 		<section data-route="chatRoom">
 
 			<div class="window" style="background-color: #1296E0;">
-<div style="float:left;width:100px;border-right:1px solid black;height:300px;padding:10px;overflow:scroll-y;">
-	<b>ROOMS</b>
-	<div id="rooms"></div>
-</div>
-<div style="float:left;width:300px;height:250px;overflow:scroll-y;padding:10px;">
-	<div id="conversation"></div>
-	<input id="data" style="width:200px;" />
-	<input type="button" id="datasend" value="send" />
+
+				<div class="header">
+
+					<div class="logo">
+						HACKROULETTE
+					</div>
+
+					<div class="nextChat">
+
+						New Chat >
+
+					</div>
+
+				</div>
+
+				<div class="topic">
+
+					Is it ethical to get an abortion?
+
+				</div>
+
+				<div id="chatTop">
+
+					<div class="messageContainer">
+
+				    	<ul id="messages"></ul>
+
+				    </div>
+
+				    <form action="">
+
+				      <input id="m" autocomplete="off" />
+				      <button class="formButton">Send</button>
+
+				    </form>
+
+				</div>
 
 			</div>
 

@@ -44,10 +44,10 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.get('/auth/twitter', passport.authenticate('twitter'));
-app.get('/auth/twitter/callback', passport.authenticate('twitter', { successRedirect: '/tweets', failureRedirect: '/login' }));
+app.get('/auth/twitter/callback', passport.authenticate('twitter', { successRedirect: '/#/waitingRoom', failureRedirect: '/login' }));
+
 
 app.get('/tweets', function(req, res) {
-    if(!req.user) { return res.redirect('/'); }
     var client = new Twitter({
         consumer_key: '1n20OYq3cIpIUkp4EEq3d8Nbp',
         consumer_secret: '8ZTnyTgFT7pvVckbaHHJdOPylqz8jxKyZdrbrNfobrnytt8F0l',
@@ -62,9 +62,8 @@ app.get('/tweets', function(req, res) {
             for(i = 0; i < tweets.length; i++){
                 words.push(tweets[i].text);
             }
+            console.log(words);
             res.send(words);
-            console.log(words.length);
-            //res.send(tweets);
         }
     });
 });
@@ -78,14 +77,6 @@ http.listen(process.env.PORT || 3000, function() {
 	console.log('listening on port 3000');
 });
 
-var single = "Blog posts about Android tech make better journalism than most news outlets.";
-indico.textTags(single, indico_settings)
-  .then(function(res) {
-    //console.log(res);
-  }).catch(function(err) {
-    console.warn(err);
-  });
-
 var batch = [
     "Finally here! Eric Schmidt being the first keynote speaker.",
     "This is a second tweet",
@@ -94,37 +85,38 @@ var batch = [
 
 // Currently takes in a batch of strings and averages the values into a javascript object
 // Can also use indico.batchTextTags
-indico.batchPolitical(batch, indico_settings)
-  .then(function(res) {
-    
-    var objects = res;
-    var hash_table = {};
+app.get('/interests', function(req, res1) {
+  console.log(req);
+  indico.batchTextTags(req.query.body, indico_settings)
+    .then(function(res) {
+      var objects = res;
+      var hash_table = {};
 
-    // Loop through the objects, each object contains a a number of key value pairs
-    for(var i = 0; i < objects.length; i++) {
-      // For each key value pair
-      for(var key in objects[i]) {
-        // If our hash table already contains the key, add to its value
-        if(hash_table.hasOwnProperty(key)) {
-          hash_table[key] += objects[i][key];
-        // Otherwise, set the value
-        } else {
-          hash_table[key] = objects[i][key];
+      // Loop through the objects, each object contains a a number of key value pairs
+      for(var i = 0; i < objects.length; i++) {
+        // For each key value pair
+        for(var key in objects[i]) {
+          // If our hash table already contains the key, add to its value
+          if(hash_table.hasOwnProperty(key)) {
+            hash_table[key] += objects[i][key];
+          // Otherwise, set the value
+          } else {
+            hash_table[key] = objects[i][key];
+          }
         }
       }
-    }
 
-    // Take the result and average it
-    for(var key in hash_table) {
-      hash_table[key] /= objects.length;
-    }
-
-    // Result is a hash table of averaged values from indico
-    console.log(hash_table);
-  }).catch(function(err) {
-    console.warn(err);
-  });
-
+      // Take the result and average it
+      for(var key in hash_table) {
+        hash_table[key] /= objects.length;
+      }
+      console.log(hash_table);
+      // Result is a hash table of averaged values from indico
+      res1.send(hash_table);
+    }).catch(function(err) {
+      console.warn(err);
+    });
+});
 // =============== CHAT ROOM W/ SOCKET.IO ==================
 
 // usernames which are currently connected to the chat
