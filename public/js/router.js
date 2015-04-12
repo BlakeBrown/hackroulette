@@ -1,19 +1,26 @@
 $(document).ready(function() {
   // ROUTES
+  var socket = io();
   var index = function() {
     console.log('welcome!');
   };
   var waitingRoom = function() {
     console.log('Welcome to the waiting room bitch');
     $.get('/tweets')
-          .done(function(res) {
-            console.log(res);
-            $.get('/interests', {body: res})
-                .done(function(res2) {
-                    console.log(res2);
-                });
+      .done(function(res) {
+        console.log(res);
+        $.get('/interests', {body: res.tweets})
+          .done(function(res2) {
+              console.log(res2);
+              socket.emit('userAuth', {
+                name: res.uid
+              });
           });
+      });
   };
+  socket.on('enable start button', function() {
+    $('.startButton').attr('disabled', false);
+  });
   var routes = {
     '/home': index,
     '/waitingRoom': waitingRoom

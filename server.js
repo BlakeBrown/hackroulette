@@ -1,14 +1,15 @@
 var express = require('express'),
-    path	= require("path"),
-	app 	= express(),
-	http 	= require('http').Server(app),
-	bodyParser = require('body-parser'),
+    path = require("path"),
+    app = express(),
+    http = require('http').Server(app),
+    bodyParser = require('body-parser'),
     expressSession = require('express-session'),
     cookieParser = require('cookie-parser'),
     passport = require('passport'),
     TwitterStrategy = require('passport-twitter').Strategy,
-	indico = require('indico.io'),
-    Twitter = require('twitter'), 
+	  indico = require('indico.io'),
+    Twitter = require('twitter'),
+    _ = require('underscore'),
     io = require('socket.io')(http),
     Chance = require('chance');
 
@@ -55,18 +56,65 @@ app.get('/tweets', function(req, res) {
         access_token_secret: req.user.secret
     });
 
-    var params = {screen_name: req.user.screen_name };
+    var params = {screen_name: req.user.screen_name};
     client.get('statuses/user_timeline', params, function(error, tweets, response){
-        if (!error) {
-            var words = [];
-            for(i = 0; i < tweets.length; i++){
-                words.push(tweets[i].text);
-            }
-            console.log(words);
-            res.send(words);
+      var retObj = {};
+      retObj.tweets = [];
+      if (!error) {
+        for(i = 0; i < tweets.length; i++){
+            retObj.tweets.push(tweets[i].text);
+        }
+        retObj.uid = req.user.id;
+        getPoliticalAlignment(retObj.tweets, retObj.uid, storeUserPoliticalAlignmentPair);
+        res.send(retObj);
         }
     });
 });
+var UserPoliticalAlignmentPair = [];
+var storeUserPoliticalAlignmentPair = function(uid, objArr) {
+  var newUserObj = {},
+      hash_table = {},
+      objects = objArr,
+      topPoliticalResult;
+
+    // Loop through the objects, each object contains a a number of key value pairs
+  for(var i = 0; i < objects.length; i++) {
+    // For each key value pair
+    for(var key in objects[i]) {
+      // If our hash table already contains the key, add to its value
+      if(hash_table.hasOwnProperty(key)) {
+        hash_table[key] += objects[i][key];
+      // Otherwise, set the value
+      } else {
+        hash_table[key] = objects[i][key];
+      }
+    }
+  }
+
+  var party = "conservative";
+  var max = 0;
+  console.log(hash_table);
+  // Take the result and average it
+  for(var key in hash_table) {
+    hash_table[key] /= objects.length;
+    if(hash_table[key] > max){
+      party = key;
+      max = hash_table[key];
+    }
+  }
+  // console.log(party);
+  newUserObj[uid] = party;
+  UserPoliticalAlignmentPair.push(newUserObj);
+  console.log(UserPoliticalAlignmentPair);
+}
+var getPoliticalAlignment = function(strArr, uid, cb) {
+  indico.batchPolitical(strArr, indico_settings)
+    .then(function(res) {
+      cb(uid, res);
+    }).catch(function(err) {
+      console.warn(err);
+    });
+}
 
 app.get('/tags', function(request, response) {
     console.log(request.query);
@@ -83,10 +131,20 @@ var batch = [
     "This is a third tweet"
 ];
 
+var getMaxTen = function(obj) {
+  var topTen = [];
+  for (var i = 0; i < 10; i++) {
+    var maxVal = _.max(obj);
+    topTen.push(maxVal);
+    console.log(maxVal);
+    delete obj[_.keys(maxVal)[0]];
+  };
+  console.log(_.allKeys(topTen));
+}
+
 // Currently takes in a batch of strings and averages the values into a javascript object
 // Can also use indico.batchTextTags
 app.get('/interests', function(req, res1) {
-  console.log(req);
   indico.batchTextTags(req.query.body, indico_settings)
     .then(function(res) {
       var objects = res;
@@ -110,29 +168,42 @@ app.get('/interests', function(req, res1) {
       for(var key in hash_table) {
         hash_table[key] /= objects.length;
       }
-      console.log(hash_table);
       // Result is a hash table of averaged values from indico
-      res1.send(hash_table);
+      res1.send({interests: hash_table});
     }).catch(function(err) {
       console.warn(err);
     });
 });
-// =============== CHAT ROOM W/ SOCKET.IO ==================
 
+// =============== CHAT ROOM W/ SOCKET.IO ==================
 // usernames which are currently connected to the chat
 var usernames = {};
 
 // rooms which are currently available in chat
 var rooms = ['room1','room2','room3'];
 
+var users = [],
+    usercount = 0;
+
 io.sockets.on('connection', function (socket) {
-    
+
+  // Enable the chat room button when there's more than 2 users on our site
+    socket.on('user auth', function(uid) {
+      console.log('Authenticated user');
+      usercount++;
+      users.push(uid);
+      console.log('uid:'+uid+' '+'count:'+usercount);
+      if (usercount>1) {
+        socket.emit('enable start button');
+      }
+    });
+
     // when the client emits 'adduser', this listens and executes
     socket.on('adduser', function(){
 
         // Generate a random username for the user
         var chance = new Chance();
-        var username = chance.name(); 
+        var username = chance.name();
 
         socket.username = username;
         // Update the client to let him to know he/she joined
@@ -155,13 +226,13 @@ io.sockets.on('connection', function (socket) {
         socket.broadcast.to('room1').emit('updatechat', 'SERVER', username + ' has connected to this room');
         socket.emit('updaterooms', rooms, 'room1');
     });
-    
+
     // when the client emits 'sendchat', this listens and executes
     socket.on('sendchat', function (data) {
         // we tell the client to execute 'updatechat' with 2 parameters
         io.sockets.in(socket.room).emit('updatechat', socket.username, data);
     });
-    
+
     socket.on('switchRoom', function(newroom){
         socket.leave(socket.room);
         socket.join(newroom);
@@ -173,7 +244,6 @@ io.sockets.on('connection', function (socket) {
         socket.broadcast.to(newroom).emit('updatechat', 'SERVER', socket.username+' has joined this room');
         socket.emit('updaterooms', rooms, newroom);
     });
-    
 
     // when the user disconnects.. perform this
     socket.on('disconnect', function(){
