@@ -2,7 +2,7 @@ html {
 	margin:0px;
 	padding: 0px;
 	font-size: 14px;
-	font-family: Avenir;
+	font-family: Avenir Next;
 	background-color: #000;
 	color:#fff;
 	text-align: center;
@@ -10,6 +10,7 @@ html {
 
 body{
 	margin:0;
+	font-family: Avenir Next;
 }
 
 canvas{
@@ -153,7 +154,7 @@ canvas{
 
 .loadingText{
 	position: absolute;
-	top:2vh;
+	top:5vh;
 	right:28vw;
 	display: inline-block;
 	z-index: 2;
@@ -162,20 +163,36 @@ canvas{
 
 .startButton{
 	width:20vw;
-	padding-top:10px;
-	padding-bottom:10px;
+	height:40px;
 	border: 1px solid white;
 	border-radius: 100px;
 	display: inline-block;
-	visibility: hidden;
-	overflow: visible;
+	visibility: visible;
 	position: relative;
 	top:0;
 	left:0;
 }
 
-.startButton:hover{
+.startButtonBuffer{
+	width: calc(20vw + 1px);
+	padding-top:10px;
+	padding-bottom:10px;
+	height:41px;
+	background-color: transparent;
+	border: 1px solid transparent;
+	border-radius: 100px;
+	display: inline-block;
+	overflow: hidden;
+	visibility: visible;
+	position: relative;
+	top:-2px;
+	left:-1px;
+	transition: 0.3s all linear;
+}
 
+.startButton:hover{
+	cursor: pointer;
+	color:#1296E0;
 }
 
 .startButton:hover .skew{
@@ -186,7 +203,7 @@ canvas{
 
 .dataText{
 	position: absolute;
-	top:2vh;
+	top:5vh;
 	left:28vw;
 	width:20vw;
 	text-align: left;

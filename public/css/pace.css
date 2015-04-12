@@ -1,8 +1,8 @@
 .pace {
   width: 140px;
   height: 300px;
-  position: fixed;
-  top: 42vh;
+  position: absolute;
+  top: 40vh;
   right: 24vw;
   z-index: 2000;
   -webkit-transform: scale(0);
