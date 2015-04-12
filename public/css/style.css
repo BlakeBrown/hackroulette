@@ -31,9 +31,9 @@ canvas{
 }
 
 #particles-js{
-  height:100%;
-  background:#000;
-  opacity:0.6;
+  height:100vh;
+  background:#1296E0;
+  opacity:0.3;
 }
 
 .window{
@@ -56,33 +56,110 @@ canvas{
 	font-size: 5.5em;
 	font-family: 'bebas', Arial, Helvetica, sans-serif;
 	letter-spacing: 0.03em;
+	visibility: hidden;
+	width:100vw;
 }
 
 .subtitle{
 	font-weight:100;
 	font-size: 1.5em;
+	visibility: hidden;
 }
 
 .joinBuffer {
 	margin-top:70px;
 	margin-bottom:20px;
 	width:100vw;
-
 }
 
 .joinButton {
-	background-color: #000;
 	color:#fff;
 	border: 1px solid #fff;
-	width:15vw;
+	width:18vw;
 	padding-top:10px;
 	padding-bottom:10px;
 	display:inline-block;
-	border-radius:5px;
-	transition: all 0.2s linear;
+	border-radius:100px;
+	transition: all .4s cubic-bezier(0.645,.045,.355,1);
+	overflow:hidden;
+	position: relative;
+	top:0;
+	left:0;
+	visibility: hidden;
+}
+
+.skew{
+	background:#fff;
+	position: absolute;
+	z-index: -1;
+	opacity: 0.9;
+	top:0px;
+	bottom:0px;
+	left:50%;
+	right:50%;
+	transform: skewX(10deg);
+	-webkit-transform: skewX(10deg);
+	-ms-transform: skewX(10deg);
+	-moz-transform: skewX(10deg);
+	transition: all 0.6s ease-in;
+	-webkit-transition: all 0.6s ease-in;
+	-moz-transition: all 0.6s ease-in;
+
+}
+
+.joinButton:hover .skew{
+	position: absolute;
+	left:0%;
+	right:0%;
 }
 
 .joinButton:hover{
-	color:#000;
-	background-color: #fff
+	color:#062d42;
+	cursor: pointer;
+}
+
+/* ------------- LOADING PAGE ----------- */
+
+.lineBuffer {
+	margin-top:20px;
+	margin-bottom:20px;
+	width:100vw;
+	position: relative;
+	top:0;
+	left:0;
+	height:18vh;
+}
+
+.loadingLine{
+	width:80vw;
+	height:20px;
+	border:1px solid white;
+	border-radius:100px;
+	background-color: #fff;
+	display: inline-block;
+	position: absolute;
+	top:50%;
+	left:50%;
+	transform: translateY(-50%) translateX(-50%);
+	z-index: 1;
+}
+
+.loadingText{
+	position: absolute;
+	top:50%;
+	left:50%;
+	transform: translateY(-50%) translateX(-50%);
+	display: inline-block;
+	z-index: 2;
+	color:red;
+}
+
+.startButton{
+	width:20vw;
+	padding-top:10px;
+	padding-bottom:10px;
+	border: 1px solid white;
+	border-radius: 100px;
+	display: inline-block;
+	visibility: hidden;
 }
