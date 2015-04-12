@@ -64,8 +64,20 @@ form button {
 #chat{
 	background-color:blue;
 }
-
-.header{
+#users_waiting_wrapper {
+	position: absolute;
+	left: 85vw;
+	top: -40vh;
+}
+#users_waiting_list {
+	list-style-type: none;
+	padding: 0;
+	text-align: left;
+}
+#client_list_item {
+	color: #FFDD2E;
+}
+.header {
 	width:100vw;
 	position: relative;
 	top:0;
@@ -99,7 +111,7 @@ form button {
 	cursor: pointer;
 }
 
-.topic{
+.topic {
 	width:80vw;
 	display: inline-block;
 	background-color: #FF8DD1;
