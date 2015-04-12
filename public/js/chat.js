@@ -1,4 +1,4 @@
-$(document).ready(function() {
+/*$(document).ready(function() {
 
 	var socket = io();
 
@@ -13,4 +13,4 @@ $(document).ready(function() {
 	});
 	
 });
-  
+  */

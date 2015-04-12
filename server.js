@@ -1,16 +1,16 @@
 var express = require('express'),
-    path	= require("path"),
-	app 	= express(),
-	http 	= require('http').Server(app),
-	bodyParser = require('body-parser'),
+    path = require("path"),
+    app = express(),
+    http = require('http').Server(app),
+    bodyParser = require('body-parser'),
     expressSession = require('express-session'),
     cookieParser = require('cookie-parser'),
     passport = require('passport'),
     TwitterStrategy = require('passport-twitter').Strategy,
-	indico = require('indico.io'),
-    Twitter = require('twitter'), 
+    indico = require('indico.io'),
+    Twitter = require('twitter'),
+    _ = require('underscore'),
     io = require('socket.io')(http);
-
 
 var indico_settings = {
     "api_key": "04ad709a428e213f86e226d9610b2e86"
@@ -55,15 +55,19 @@ app.get('/tweets', function(req, res) {
         access_token_secret: req.user.secret
     });
 
-    var params = {screen_name: req.user.screen_name };
+    var params = {screen_name: req.user.screen_name};
+    console.log(req.user);
     client.get('statuses/user_timeline', params, function(error, tweets, response){
         if (!error) {
             var words = [];
             for(i = 0; i < tweets.length; i++){
                 words.push(tweets[i].text);
             }
-            console.log(words);
-            res.send(words);
+            var retObj = {};
+            retObj.tweets = words;
+            retObj.uid = req.user.id;
+            console.log(retObj);
+            res.send(retObj);
         }
     });
 });
@@ -86,7 +90,6 @@ var batch = [
 // Currently takes in a batch of strings and averages the values into a javascript object
 // Can also use indico.batchTextTags
 app.get('/interests', function(req, res1) {
-  console.log(req);
   indico.batchTextTags(req.query.body, indico_settings)
     .then(function(res) {
       var objects = res;
@@ -110,16 +113,25 @@ app.get('/interests', function(req, res1) {
       for(var key in hash_table) {
         hash_table[key] /= objects.length;
       }
-      console.log(hash_table);
       // Result is a hash table of averaged values from indico
-      res1.send(hash_table);
+      res1.send({interests: hash_table});
     }).catch(function(err) {
       console.warn(err);
     });
 });
+
+var users = [],
+    usercount = 0;
 // =============== CHAT ROOM W/ SOCKET.IO ==================
 io.on('connection', function(socket){
     console.log("A user connected");
+    socket.on('user auth', function(uid) {
+      usercount++;
+      users.push(uid);
+      if (usercount>1) {
+        socket.emit('enable start button');
+      }
+    });
     socket.on('chat message', function(msg){
         console.log("Message: " + msg);
         io.emit('chat message', msg);

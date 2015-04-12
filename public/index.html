@@ -5,19 +5,17 @@
 	<head>
 		<title>HackRoulette</title>
 
-
+		<link rel="stylesheet" type="text/css" href="css/style.css">
 		<link rel="stylesheet" type="text/css" href="css/animate.css">
 		<link rel="stylesheet" type="text/css" href="css/modal.css">
 		<link rel="icon" href="img/favicon.png">
 		<link rel="stylesheet" type="text/css" href="css/chat.css">
 		<link rel="stylesheet" type="text/css" href="css/pace.css">
-		<link rel="stylesheet" type="text/css" href="css/style.css">
 
 
 	</head>
 
 	<body>
-	
 		<section data-route='home'>
 			<div id="particles-js"></div>
 
@@ -27,7 +25,7 @@
 
 					<h1 class="title"> HackRoulette</h1>
 
-					<h1 class="subtitle">a chat roulette for the modern browser</h1>	
+					<h1 class="subtitle">A chat roulette for the modern browser</h1>
 
 					<div class="joinBuffer">
 
@@ -35,22 +33,15 @@
 
 					    <div class="joinButton">
 
-					    	<div class="joinButtonBuffer">
-
-					    		Chat Now
-
-					
+					    	Chat Now
 
 					    	<div class="skew">
 					    	</div>
-
-					    	</div>
-					                           
 					    </div>
 
 					    </a>
 
-					</div>	
+					</div>
 				</div>
 
 			</div>
@@ -69,53 +60,31 @@
 			    </div>
 			</div>
 		</section>
-		             		      
 		<section data-route='waitingRoom'>
-			
 			<div class="window">
-
-				<div class="backgroundColor">
-				</div>
-
+				<div class="backgroundColor"></div>
 				<div class="contentContainer">
-
 					<h1 class="title">HackRoulette</h1>
-
 					<div class="lineBuffer">
-
 						<div class="dataText">
-
-							Welcome Mr. Conservative!<br><br>
+							Hello Mr. Conservative!<br><br>
 							Currently matching you with someone who is interested in Ponies and Rainbows.
-
 						</div>
-
 						<div class="loadingText" id="loadingText">
-
-							Loading ...
-
+							loading
 						</div>
-
-						<!--<div class="pace">
-						</div>-->
-
+						<div class="pace">
+						</div>
 					</div>
-
 					<div class="joinBuffer">
-
-
-						<div class="startButton">
-
-							<div class="startButtonBuffer">
+						<button class="startButton" disabled="true">
 
 							Start Now
 
 							<div class="skew">
 					    	</div>
 
-					    	</div>
-
-						</div>
+						</button>
 
 					</div>
 
@@ -123,23 +92,17 @@
 
 			</div>
 
-			
 
 		</section>
 
 		<section data-route="chatRoom">
 
-			<div class="window" style="background-color: #1296E0;">
+			<div style="padding:10px; width:110vw" id="chatTop">
 
-				<div id="chatTop">
-
-				    <ul id="messages"></ul>
-
-				    <form action="">
-				      <input id="m" autocomplete="off" /><button>Send</button>
-				    </form>
-
-				</div>
+			    <ul id="messages"></ul>
+			    <form action="">
+			      <input id="m" autocomplete="off" /><button>Send</button>
+			    </form>
 
 			</div>
 
@@ -148,7 +111,7 @@
 
 		<script src="js/jquery.min.js"></script>
 		<script src="js/waypoint.js"></script>
-		<!--<script src="js/pace.js"></script>-->
+		<script src="js/pace.js"></script>
 		<script src='js/director.min.js'></script>
 		<script src="js/particle.js"></script>
 		<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
