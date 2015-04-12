@@ -83,22 +83,70 @@ http.listen(process.env.PORT || 3000, function() {
 	console.log('listening on port 3000');
 });
 
-var single = "Blog posts about Android tech make better journalism than most news outlets.";
-indico.textTags(single, indico_settings)
-  .then(function(res) {
-    //console.log(res);
-  }).catch(function(err) {
-    console.warn(err);
-  });
-
 var batch = [
-  "Iran agress to nuclear limits, but key issues are unresolved.",
-  "We're supposed to get up to 24 inches of snow in the storm."
+  "Finally here! Eric Schmidt being the first keynote speaker.",
+  "This is a second tweet",
+  "This is a third tweet"
 ];
 
-indico.batchTextTags(batch, indico_settings)
+indico.batchPolitical(batch, indico_settings)
   .then(function(res) {
-    //console.log(res);
+    
+    var objects = res;
+
+    var hash_table = {};
+
+    // Loop through the objects, each object contains a a number of key value pairs
+    for(var i = 0; i < objects.length; i++) {
+      // For each key value pair
+      for(var key in objects[i]) {
+
+        // If our hash table already contains the key, add to its value
+        if(hash_table.hasOwnProperty(key)) {
+          hash_table[key] += objects[i][key];
+        // Otherwise, set the value
+        } else {
+          hash_table[key] = objects[i][key];
+        }
+      }
+    }
+
+    for(var key in hash_table) {
+      hash_table[key] /= objects.length;
+    }
+
+    console.log(hash_table);
   }).catch(function(err) {
     console.warn(err);
   });
+
+// indico.batchTextTags(batch, indico_settings)
+//   .then(function(res) {
+    
+//     var objects = res;
+
+//     var hash_table = {};
+
+//     // Loop through the objects, each object contains a a number of key value pairs
+//     for(var i = 0; i < objects.length; i++) {
+//       // For each key value pair
+//       for(var key in objects[i]) {
+
+//         // If our hash table already contains the key, add to its value
+//         if(hash_table.hasOwnProperty(key)) {
+//           hash_table[key] += objects[i][key];
+//         // Otherwise, set the value
+//         } else {
+//           hash_table[key] = objects[i][key];
+//         }
+//       }
+//     }
+
+//     for(var key in hash_table) {
+//       hash_table[key] /= objects.length;
+//     }
+
+//     console.log(hash_table);
+//   }).catch(function(err) {
+//     console.warn(err);
+//   });
