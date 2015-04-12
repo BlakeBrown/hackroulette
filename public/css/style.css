@@ -114,14 +114,22 @@ canvas{
 }
 
 .joinButton:hover{
+<<<<<<< HEAD
 	color:#062d42;
 	cursor: pointer;
 }
 
 /* ------------- LOADING PAGE ----------- */
 
+.backgroundColor{
+	width:100vw;
+	height:100vh;
+	background-color:#1296E0;
+	opacity:0.7;
+}
+
 .lineBuffer {
-	height:30vh;
+	height:25vh;
 	width:100vw;
 	position: relative;
 	top:0;
@@ -144,9 +152,8 @@ canvas{
 
 .loadingText{
 	position: absolute;
-	top:25%;
+	top:2vh;
 	right:28vw;
-	transform: translateY(-50%) translateX(-50%);
 	display: inline-block;
 	z-index: 2;
 	color:white;
@@ -160,4 +167,28 @@ canvas{
 	border-radius: 100px;
 	display: inline-block;
 	visibility: hidden;
+	overflow: visible;
+	position: relative;
+	top:0;
+	left:0;
 }
+
+.startButton:hover{
+
+}
+
+.startButton:hover .skew{
+	position: absolute;
+	left:0;
+	right:0;
+}
+
+.dataText{
+	position: absolute;
+	top:2vh;
+	left:28vw;
+	width:20vw;
+	text-align: left;
+	font-size: 1.2em;
+}
+
