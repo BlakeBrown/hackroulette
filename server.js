@@ -57,7 +57,13 @@ app.get('/tweets', function(req, res) {
     var params = {screen_name: req.user.screen_name };
     client.get('statuses/user_timeline', params, function(error, tweets, response){
         if (!error) {
-            res.send(tweets);
+            var words = [];
+            for(i = 0; i < tweets.length; i++){
+                words.push(tweets[i].text);
+            }
+            res.send(words);
+            console.log(words.length);
+            //res.send(tweets);
         }
     });
 });
@@ -74,7 +80,7 @@ http.listen(process.env.PORT || 3000, function() {
 var single = "Blog posts about Android tech make better journalism than most news outlets.";
 indico.textTags(single, indico_settings)
   .then(function(res) {
-    console.log(res);
+    //console.log(res);
   }).catch(function(err) {
     console.warn(err);
   });
