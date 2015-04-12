@@ -2,7 +2,7 @@ html {
 	margin:0px;
 	padding: 0px;
 	font-size: 14px;
-	font-family: Avenir Next;
+	font-family: Avenir;
 	background-color: #000;
 	color:#fff;
 	text-align: center;
@@ -31,7 +31,7 @@ canvas{
 }
 
 #particles-js{
-  height:100vh;
+  width:100vw;
   background:#1296E0;
   opacity:0.3;
 }
@@ -64,6 +64,7 @@ canvas{
 	font-weight:100;
 	font-size: 1.5em;
 	visibility: hidden;
+	margin-top:7vh;
 }
 
 .joinBuffer {
