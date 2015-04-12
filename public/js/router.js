@@ -29,7 +29,7 @@ $(document).ready(function() {
                 delete list[tops[i]];
               }
               console.log(tops);
-                $('.dataText').append("<em>It seems like you are interested in:</em>");
+                $('.dataText').append("<strong>It seems like you are interested in:</strong><br>");
               for(var i = 0; i < 5; i++){
                 $('.dataText').append(document.createTextNode(tops[i]),"<br>");
               }
