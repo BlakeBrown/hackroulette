@@ -9,8 +9,8 @@ var express = require('express'),
     TwitterStrategy = require('passport-twitter').Strategy,
 	indico = require('indico.io'),
     Twitter = require('twitter'), 
-    io = require('socket.io')(http);
-
+    io = require('socket.io')(http),
+    Chance = require('chance');
 
 var indico_settings = {
     "api_key": "04ad709a428e213f86e226d9610b2e86"
@@ -136,13 +136,25 @@ var rooms = ['room1','room2','room3'];
 io.sockets.on('connection', function (socket) {
     
     // when the client emits 'adduser', this listens and executes
-    socket.on('adduser', function(username){
-        // store the username in the socket session for this client
+    socket.on('adduser', function(){
+
+        // Generate a random username for the user
+        var chance = new Chance();
+        var username = chance.name(); 
+
         socket.username = username;
+        // Update the client to let him to know he/she joined
+        socket.emit('client_joined_waiting_room', username);
+        // Update only the new user with the other people waiting in the chat room
+        socket.emit('get_other_users_in_waiting_room', usernames); 
+        // Update all the other users (excluding the client) with the new user
+        socket.broadcast.emit('user_joined_waiting_room', username);
+
+        // Add the username to a global list
+        usernames[username] = username;
+
         // store the room name in the socket session for this client
         socket.room = 'room1';
-        // add the client's username to the global list
-        usernames[username] = username;
         // send client to room 1
         socket.join('room1');
         // echo to client they've connected
@@ -173,6 +185,8 @@ io.sockets.on('connection', function (socket) {
 
     // when the user disconnects.. perform this
     socket.on('disconnect', function(){
+        // Update all of the other users in the waiting room to show the user left
+        socket.broadcast.emit('user_left_waiting_room', socket.username);
         // remove the username from global usernames list
         delete usernames[socket.username];
         // update list of users in chat, client-side

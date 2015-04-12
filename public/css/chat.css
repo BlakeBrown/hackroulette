@@ -43,3 +43,16 @@ form button {
 #chat{
 	background-color:blue;
 }
+#users_waiting_wrapper {
+	position: absolute;
+	left: 85vw;
+	top: -40vh;
+}
+#users_waiting_list {
+	list-style-type: none;
+	padding: 0;
+	text-align: left;
+}
+#client_list_item {
+	color: #FFDD2E;
+}
