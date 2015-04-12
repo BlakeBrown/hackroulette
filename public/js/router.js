@@ -12,13 +12,13 @@ $(document).ready(function() {
         $.get('/interests', {body: res.tweets})
           .done(function(res2) {
               console.log(res2);
-              socket.emit('userAuth', {
+              socket.emit('user auth', {
                 name: res.uid
               });
           });
       });
   };
-  socket.on('enable start button', function() {
+  socket.on('enable_start_button', function() {
     $('.startButton').attr('disabled', false);
   });
   var routes = {
