@@ -1,33 +1,41 @@
 form { 
 	background: #1296E0;
-	bottom: 0;
-	width: 80%; 
+	bottom: 5vh; 
 	margin-left:5%; 
 	position: fixed; 
-	bottom: 0; 
+	font-family: Avenir Next;
 }
 form input { 
 	border: 0; 
 	padding: 10px; 
-	width: 90%; 
-	margin-right: .5%;  
+	width: 80vw; 
+	display: inline-block;
+	font-family: Avenir Next;  
 }
 form button { 
-	width: 9%; 
+	width: 10vw;
 	background: rgb(130, 224, 255); 
 	border: none; 
-	padding: 10px;
+	margin-left: 5px;
+	padding-top: 7px;
+	padding-bottom: 7px;
+	display: inline-block;
+	border-radius: 5px;
+	font-family: Avenir Next;
+	font-size:0.9em;
 }
 #messages { 
 	list-style-type: none;  
-	width: 73%; 
-	margin-left:4%; 
 	padding: 0; 
 	color:black;
 	white-space:pre-wrap; 
+	width:80vw;
+	display: inline-block;
 }
 #messages li { 
-	padding: 5px 
+	padding: 5px;
+	width:80vw;
+	display: inline-block;
 }
 #messages li:nth-child(odd) {
 	background: #eee;
