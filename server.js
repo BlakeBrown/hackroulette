@@ -86,7 +86,7 @@ http.listen(process.env.PORT || 3000, function() {
 var single = "Blog posts about Android tech make better journalism than most news outlets.";
 indico.textTags(single, indico_settings)
   .then(function(res) {
-    //console.log(res);
+    console.log(res);
   }).catch(function(err) {
     console.warn(err);
   });
