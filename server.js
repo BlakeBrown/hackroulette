@@ -25,7 +25,7 @@ app.use(passport.session());
 passport.use(new TwitterStrategy({
     consumerKey: "1n20OYq3cIpIUkp4EEq3d8Nbp",
     consumerSecret: "8ZTnyTgFT7pvVckbaHHJdOPylqz8jxKyZdrbrNfobrnytt8F0l",
-    callbackURL: "http://localhost:3000/auth/twitter/callback"
+    callbackURL: "/auth/twitter/callback"
 }, function(token, tokenSecret, profile, done) {
     done(null, { id: profile.id, screen_name: profile.screen_name, token: token, secret: tokenSecret });
 }));
