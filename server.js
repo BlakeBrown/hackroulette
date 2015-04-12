@@ -56,21 +56,64 @@ app.get('/tweets', function(req, res) {
     });
 
     var params = {screen_name: req.user.screen_name};
-    console.log(req.user);
     client.get('statuses/user_timeline', params, function(error, tweets, response){
-        if (!error) {
-            var words = [];
-            for(i = 0; i < tweets.length; i++){
-                words.push(tweets[i].text);
-            }
-            var retObj = {};
-            retObj.tweets = words;
-            retObj.uid = req.user.id;
-            console.log(retObj);
-            res.send(retObj);
+      var retObj = {};
+      retObj.tweets = [];
+      if (!error) {
+        for(i = 0; i < tweets.length; i++){
+            retObj.tweets.push(tweets[i].text);
+        }
+        retObj.uid = req.user.id;
+        getPoliticalAlignment(retObj.tweets, retObj.uid, storeUserPoliticalAlignmentPair);
+        res.send(retObj);
         }
     });
 });
+var UserPoliticalAlignmentPair = [];
+var storeUserPoliticalAlignmentPair = function(uid, objArr) {
+  var newUserObj = {},
+      hash_table = {},
+      objects = objArr,
+      topPoliticalResult;
+
+    // Loop through the objects, each object contains a a number of key value pairs
+  for(var i = 0; i < objects.length; i++) {
+    // For each key value pair
+    for(var key in objects[i]) {
+      // If our hash table already contains the key, add to its value
+      if(hash_table.hasOwnProperty(key)) {
+        hash_table[key] += objects[i][key];
+      // Otherwise, set the value
+      } else {
+        hash_table[key] = objects[i][key];
+      }
+    }
+  }
+
+  var party = "conservative";
+  var max = 0;
+  console.log(hash_table);
+  // Take the result and average it
+  for(var key in hash_table) {
+    hash_table[key] /= objects.length;
+    if(hash_table[key] > max){
+      party = key;
+      max = hash_table[key];
+    }
+  }
+  // console.log(party);
+  newUserObj[uid] = party;
+  UserPoliticalAlignmentPair.push(newUserObj);
+  console.log(UserPoliticalAlignmentPair);
+}
+var getPoliticalAlignment = function(strArr, uid, cb) {
+  indico.batchPolitical(strArr, indico_settings)
+    .then(function(res) {
+      cb(uid, res);
+    }).catch(function(err) {
+      console.warn(err);
+    });
+}
 
 app.get('/tags', function(request, response) {
     console.log(request.query);
@@ -86,6 +129,17 @@ var batch = [
     "This is a second tweet",
     "This is a third tweet"
 ];
+
+var getMaxTen = function(obj) {
+  var topTen = [];
+  for (var i = 0; i < 10; i++) {
+    var maxVal = _.max(obj);
+    topTen.push(maxVal);
+    console.log(maxVal);
+    delete obj[_.keys(maxVal)[0]];
+  };
+  console.log(_.allKeys(topTen));
+}
 
 // Currently takes in a batch of strings and averages the values into a javascript object
 // Can also use indico.batchTextTags
@@ -126,8 +180,10 @@ var users = [],
 io.on('connection', function(socket){
     console.log("A user connected");
     socket.on('user auth', function(uid) {
+      console.log('Authenticated user');
       usercount++;
       users.push(uid);
+      console.log('uid:'+uid+' '+'count:'+usercount);
       if (usercount>1) {
         socket.emit('enable start button');
       }

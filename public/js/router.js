@@ -13,7 +13,7 @@ $(document).ready(function() {
           .done(function(res2) {
               console.log(res2);
               socket.emit('userAuth', {
-                name: req.uid
+                name: res.uid
               });
           });
       });
