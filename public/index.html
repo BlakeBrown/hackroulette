@@ -73,6 +73,8 @@
 		</section>
 		             		      
 		<section data-route='waitingRoom'>
+
+
 			
 			<div class="window">
 
@@ -137,6 +139,12 @@
 
 		<section data-route="chatRoom">
 
+		<!--<div style="float:left;width:100px;border-right:1px solid black;height:300px;padding:10px;overflow:scroll-y;">
+			<b>ROOMS</b>
+		<div id="rooms"></div>
+		</div>-->	
+
+
 			<div class="window" style="background-color: #1296E0;">
 
 				<div class="header">
@@ -161,7 +169,7 @@
 
 				<div id="chatTop">
 
-					<div class="messageContainer">
+					<div class="messageContainer" id="conversation">
 
 				    	<ul id="messages"></ul>
 
@@ -169,8 +177,8 @@
 
 				    <form action="">
 
-				      <input id="m" autocomplete="off" />
-				      <button class="formButton">Send</button>
+				      <input id="data" class="formInput" autocomplete="off" />
+				      <input type="button" id="datasend" class="formButton" value="Send" />
 
 				    </form>
 
