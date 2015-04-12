@@ -15,6 +15,24 @@ $(document).ready(function() {
               socket.emit('userAuth', {
                 name: res.uid
               });
+              var list = res2['interests'];
+              var tops = [];
+              for(var i = 0; i < 5; i++){
+                var max = 0;
+                for(var key in list){
+                    if(list[key] > max){
+                        tops[i] = key;
+                        max = list[key];
+                    }
+                }
+                console.log(tops[i], max);
+                delete list[tops[i]];
+              }
+              console.log(tops);
+                $('.dataText').append("<em>It seems like you are interested in:</em>");
+              for(var i = 0; i < 5; i++){
+                $('.dataText').append(document.createTextNode(tops[i]),"<br>");
+              }
           });
       });
   };
