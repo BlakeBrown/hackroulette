@@ -24,14 +24,14 @@ function slide() {
       $('.crystal').animate({transform: "translateY(-10%)"});
       },num);
 
-    num = num+500
+    num = num+800
 
     setTimeout(function() {
       $('.crystal').removeClass('fadeIn');
       $('.crystal').addClass('fadeOut');
       },num);
 
-    }, 500);
+    }, 800);
 }
 
 function startButton() {
