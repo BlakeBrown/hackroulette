@@ -1,3 +1,35 @@
+var main = function() {
+
+  $('.window').waypoint(function() {
+    $('.title').addClass('animated fadeIn').css( 'visibility','visible' );
+    }, {offset:'0px'}
+    );
+
+  $('.window').waypoint(function() {
+    setTimeout(function() {
+      $('.subtitle').addClass('animated fadeIn').css('visibility','visible');
+      },1000);
+  }, {offset:'0px'});
+
+    $('.window').waypoint(function() {
+    setTimeout(function() {
+      $('.joinButton').addClass('animated fadeIn').css('visibility','visible');
+      },1000);
+  }, {offset:'0px'});
+
+    $('.window').waypoint(function() {
+    setTimeout(function() {
+      $('.joinButtonBuffer').addClass('animated fadeIn').css('visibility','visible');
+      },1000);
+  }, {offset:'0px'});
+
+    $('.window').waypoint(function() {
+    setTimeout(function() {
+      $('.loadingLine').addClass('animated pulse').css('visibility','visible');
+      },1000);
+  }, {offset:'0px'});
+}
+
 particlesJS('particles-js', {
   particles: {
     color: '#fff',
@@ -59,3 +91,5 @@ particlesJS('particles-js', {
   /* Retina Display Support */
   retina_detect: true
 });
+
+$(document).ready(main);

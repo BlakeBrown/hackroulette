@@ -10,6 +10,7 @@ html {
 
 body{
 	margin:0;
+	font-family: Avenir Next;
 }
 
 canvas{
@@ -31,9 +32,10 @@ canvas{
 }
 
 #particles-js{
-  height:100%;
-  background:#000;
-  opacity:0.6;
+  min-width:100vw;
+  min-height: 100vh;
+  background:#1296E0;
+  opacity:0.3;
 }
 
 .window{
@@ -56,33 +58,178 @@ canvas{
 	font-size: 5.5em;
 	font-family: 'bebas', Arial, Helvetica, sans-serif;
 	letter-spacing: 0.03em;
+	visibility: hidden;
+	width:100vw;
 }
 
 .subtitle{
 	font-weight:100;
 	font-size: 1.5em;
+	visibility: hidden;
+	margin-top:7vh;
 }
 
 .joinBuffer {
-	margin-top:70px;
+	margin-top:40px;
 	margin-bottom:20px;
 	width:100vw;
-
 }
 
 .joinButton {
-	background-color: #000;
 	color:#fff;
 	border: 1px solid #fff;
-	width:15vw;
-	padding-top:10px;
-	padding-bottom:10px;
+	width:18vw;
+	height:40px;
 	display:inline-block;
-	border-radius:5px;
-	transition: all 0.2s linear;
+	border-radius:100px;
+	transition: all .4s cubic-bezier(0.645,.045,.355,1);
+	position: relative;
+	top:0;
+	left:0;
+	visibility: hidden;
+}
+
+.joinButtonBuffer{
+	width: calc(18vw + 1px);
+	padding-top:12px;
+	padding-bottom:8px;
+	height:21px;
+	background-color: transparent;
+	border: 1px solid transparent;
+	border-radius: 100px;
+	display: inline-block;
+	overflow: hidden;
+	visibility: hidden;
+	position: relative;
+	top:-2px;
+	left:-1px;
+	transition: all .4s cubic-bezier(0.645,.045,.355,1);
+}
+
+.skew{
+	background:#fff;
+	visibility: hidden;
+	position: absolute;
+	z-index: -1;
+	opacity: 0.9;
+	top:0px;
+	bottom:0px;
+	left:50%;
+	right:50%;
+	transform: skewX(10deg);
+	-webkit-transform: skewX(10deg);
+	-ms-transform: skewX(10deg);
+	-moz-transform: skewX(10deg);
+	transition: all 0.6s ease-in;
+	-webkit-transition: all 0.6s ease-in;
+	-moz-transition: all 0.6s ease-in;
+
+}
+
+.joinButton:hover .skew{
+	visibility: visible;
+	position: absolute;
+	left:0%;
+	right:0%;
+}
+
+.joinButton:hover .joinButtonBuffer{
+	width:20vw;
 }
 
 .joinButton:hover{
-	color:#000;
-	background-color: #fff
+	color:#062d42;
+	cursor: pointer;
+	width:20vw;
 }
+
+/* ------------- LOADING PAGE ----------- */
+
+.backgroundColor{
+	width:100vw;
+	height:100vh;
+	background-color:#1296E0;
+	opacity:0.7;
+}
+
+.lineBuffer {
+	height:25vh;
+	width:100vw;
+	position: relative;
+	top:0;
+	left:0;
+}
+
+.loadingLine{
+	width:80vw;
+	height:20px;
+	border:1px solid white;
+	border-radius:100px;
+	background-color: #fff;
+	display: inline-block;
+	position: absolute;
+	top:50%;
+	left:50%;
+	transform: translateY(-50%) translateX(-50%);
+	z-index: 1;
+}
+
+.loadingText{
+	position: absolute;
+	top:2vh;
+	right:29vw;
+	display: inline-block;
+	z-index: 2;
+	color:white;
+}
+
+.startButton{
+	width:20vw;
+	height:40px;
+	border: 1px solid white;
+	border-radius: 100px;
+	display: inline-block;
+	visibility: visible;
+	position: relative;
+	top:0;
+	left:0;
+}
+
+.startButtonBuffer{
+	width: calc(20vw + 1px);
+	padding-top:10px;
+	padding-bottom:10px;
+	height:21px;
+	background-color: transparent;
+	border: 1px solid transparent;
+	border-radius: 100px;
+	display: inline-block;
+	overflow: hidden;
+	visibility: visible;
+	position: relative;
+	top:-2px;
+	left:-1px;
+	transition: 0.3s all linear;
+}
+
+.startButton:hover{
+	cursor: pointer;
+	color:#1296E0;
+}
+
+.startButton:hover .skew{
+	position: absolute;
+	left:0;
+	right:0;
+	visibility: visible;
+}
+
+.dataText{
+	position: absolute;
+	top:1vh;
+	left:28vw;
+	width:20vw;
+	text-align: left;
+	font-size: 1.2em;
+}
+
