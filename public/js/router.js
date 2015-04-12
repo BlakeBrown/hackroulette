@@ -4,7 +4,15 @@ $(document).ready(function() {
     console.log('welcome!');
   };
   var waitingRoom = function() {
-    console.log('Welcome to the waiting room');
+    console.log('Welcome to the waiting room bitch');
+    $.get('/tweets')
+          .done(function(res) {
+            console.log(res);
+            $.get('/interests', res)
+                .done(function(res2) {
+                    console.log(res2);
+                });     
+          }); 
   };
   var routes = {
     '/home': index,

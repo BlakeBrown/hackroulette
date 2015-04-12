@@ -48,7 +48,6 @@ app.get('/auth/twitter/callback', passport.authenticate('twitter', { successRedi
 
 
 app.get('/tweets', function(req, res) {
-    if(!req.user) { return res.redirect('/'); }
     var client = new Twitter({
         consumer_key: '1n20OYq3cIpIUkp4EEq3d8Nbp',
         consumer_secret: '8ZTnyTgFT7pvVckbaHHJdOPylqz8jxKyZdrbrNfobrnytt8F0l',
@@ -63,9 +62,8 @@ app.get('/tweets', function(req, res) {
             for(i = 0; i < tweets.length; i++){
                 words.push(tweets[i].text);
             }
-            res.send(words);
             console.log(words);
-            crunch(words);
+            res.send(words);
         }
     });
 });
@@ -87,8 +85,9 @@ var batch = [
 
 // Currently takes in a batch of strings and averages the values into a javascript object
 // Can also use indico.batchTextTags
-function crunch(words){
-indico.batchTextTags(words, indico_settings)
+app.get('/interests', function(req, res) {
+    console.log(req);
+indico.batchTextTags(req.query, indico_settings)
   .then(function(res) {
     
     var objects = res;
@@ -112,13 +111,13 @@ indico.batchTextTags(words, indico_settings)
     for(var key in hash_table) {
       hash_table[key] /= objects.length;
     }
-
-    // Result is a hash table of averaged values from indico
     console.log(hash_table);
+    // Result is a hash table of averaged values from indico
+    res.send(hash_table);
   }).catch(function(err) {
     console.warn(err);
   });
-}
+});
 // =============== CHAT ROOM W/ SOCKET.IO ==================
 io.on('connection', function(socket){
     console.log("A user connected");
