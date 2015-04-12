@@ -4,6 +4,7 @@ $(document).ready(function() {
   var index = function() {
     console.log('welcome!');
   };
+  var chat = function() {};
   var waitingRoom = function() {
     console.log('Welcome to the waiting room bitch');
     $.get('/tweets')
@@ -23,7 +24,8 @@ $(document).ready(function() {
   });
   var routes = {
     '/home': index,
-    '/waitingRoom': waitingRoom
+    '/waitingRoom': waitingRoom,
+    '/chat': chat
   };
 
   var allroutes = function() {
