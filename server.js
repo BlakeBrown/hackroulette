@@ -85,38 +85,37 @@ var batch = [
 
 // Currently takes in a batch of strings and averages the values into a javascript object
 // Can also use indico.batchTextTags
-app.get('/interests', function(req, res) {
-    console.log(req);
-indico.batchTextTags(req.query, indico_settings)
-  .then(function(res) {
-    
-    var objects = res;
-    var hash_table = {};
+app.get('/interests', function(req, res1) {
+  console.log(req);
+  indico.batchTextTags(req.query.body, indico_settings)
+    .then(function(res) {
+      var objects = res;
+      var hash_table = {};
 
-    // Loop through the objects, each object contains a a number of key value pairs
-    for(var i = 0; i < objects.length; i++) {
-      // For each key value pair
-      for(var key in objects[i]) {
-        // If our hash table already contains the key, add to its value
-        if(hash_table.hasOwnProperty(key)) {
-          hash_table[key] += objects[i][key];
-        // Otherwise, set the value
-        } else {
-          hash_table[key] = objects[i][key];
+      // Loop through the objects, each object contains a a number of key value pairs
+      for(var i = 0; i < objects.length; i++) {
+        // For each key value pair
+        for(var key in objects[i]) {
+          // If our hash table already contains the key, add to its value
+          if(hash_table.hasOwnProperty(key)) {
+            hash_table[key] += objects[i][key];
+          // Otherwise, set the value
+          } else {
+            hash_table[key] = objects[i][key];
+          }
         }
       }
-    }
 
-    // Take the result and average it
-    for(var key in hash_table) {
-      hash_table[key] /= objects.length;
-    }
-    console.log(hash_table);
-    // Result is a hash table of averaged values from indico
-    res.send(hash_table);
-  }).catch(function(err) {
-    console.warn(err);
-  });
+      // Take the result and average it
+      for(var key in hash_table) {
+        hash_table[key] /= objects.length;
+      }
+      console.log(hash_table);
+      // Result is a hash table of averaged values from indico
+      res1.send(hash_table);
+    }).catch(function(err) {
+      console.warn(err);
+    });
 });
 // =============== CHAT ROOM W/ SOCKET.IO ==================
 io.on('connection', function(socket){

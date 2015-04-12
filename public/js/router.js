@@ -8,11 +8,11 @@ $(document).ready(function() {
     $.get('/tweets')
           .done(function(res) {
             console.log(res);
-            $.get('/interests', res)
+            $.get('/interests', {body: res})
                 .done(function(res2) {
                     console.log(res2);
-                });     
-          }); 
+                });
+          });
   };
   var routes = {
     '/home': index,
