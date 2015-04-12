@@ -28,6 +28,10 @@ var main = function() {
       $('.loadingLine').addClass('animated pulse').css('visibility','visible');
       },1000);
   }, {offset:'0px'});
+
+    var items = Array("Is it ethical to get an abortion?","Is it ethical to kill infants?","Do you approve of Obama's current foreign policy?");
+    output = document.getElementById("output").innerHTML=items[Math.floor(Math.random()*items.length)];
+
 }
 
 particlesJS('particles-js', {
