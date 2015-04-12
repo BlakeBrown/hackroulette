@@ -93,6 +93,7 @@ form {
 	font-family: 'bebas';
 	font-size: 1.3em;
 	transition: all 0.2s linear;
+	color:white;
 }
 
 .logo:hover{
@@ -105,6 +106,7 @@ form {
 	top:20px;
 	right:6vw;
 	transition: all 0.2s linear;
+	color:white;
 }
 
 .nextChat:hover{
