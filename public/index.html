@@ -1,202 +1,124 @@
 <!DOCTYPE html>
-
 <html>
-
 	<head>
 		<title>HackRoulette</title>
-
-
+		<link rel="icon" href="img/favicon.png">
 		<link rel="stylesheet" type="text/css" href="css/animate.css">
 		<link rel="stylesheet" type="text/css" href="css/modal.css">
-		<link rel="icon" href="img/favicon.png">
 		<link rel="stylesheet" type="text/css" href="css/chat.css">
 		<link rel="stylesheet" type="text/css" href="css/pace.css">
 		<link rel="stylesheet" type="text/css" href="css/style.css">
-
-
 	</head>
 
 	<body>
-	
 		<section data-route='home'>
-
 			<div id="particles-js"></div>
-
 			<div class="window">
-
 				<div class="contentContainer">
-
 					<h1 class="title"> HackRoulette</h1>
-
 					<h1 class="subtitle">a chat roulette for the modern browser</h1>	
-
 					<div class="joinBuffer">
-
 						<a href="#loginModal">
-
-					    <div class="joinButton">
-
-					    	<div class="joinButtonBuffer">
-
-					    		Chat Now
-
-					
-
-					    	<div class="skew">
-					    	</div>
-
-					    	</div>
-					                           
-					    </div>
-
+						    <div class="joinButton">
+						    	<div class="joinButtonBuffer">
+						    		Chat Now
+						    		<div class="skew"></div>
+						    	</div>                  
+						    </div>
 					    </a>
-
 					</div>	
 				</div>
-
 			</div>
 
-		<!-- Login Modal -->
 			<div id="loginModal" class="modalDialog">
 			   <div>
-			        <a href="#close" title="Close" class="close">x</a>
+			        <a href="#" title="Close" class="close">x</a>
 		       		<p class='modalTitle'></p>
 		        	<div class="linkedin">
-		            	<a href="auth/twitter"><img src="img/twitter.png" class="linkedinmodal"></a>
+		            	<a href="auth/twitter">
+		            		<img src="img/twitter.png" class="linkedinmodal">
+		            	</a>
 		        	</div>
 		        	<br>
 		        	<div class="modalline"></div>
-		        	<p class="modalText">Sign away your soul.</p>
+		        	<p class="modalText">
+		        		Sign away your soul.
+		        	</p>
 			    </div>
 			</div>
-
 		</section>
 		             		      
 		<section data-route='waitingRoom'>
-
-
-			
 			<div class="window">
-
-				<div class="backgroundColor">
-				</div>
-
+				<div class="backgroundColor"></div>
 				<div class="contentContainer">
 
 					<h1 class="title">HackRoulette</h1>
 
 					<div class="lineBuffer">
+						<div class="dataText"></div>
 
-						<div class="dataText">
-
-						</div>
 						<div id="users_waiting_wrapper">
 							<h1>Users waiting</h1>
-							<ul id="users_waiting_list">
-							
-							</ul>
+							<ul id="users_waiting_list"></ul>
 						</div>
 
 						<div class="loadingText" id="loadingText">
-
 							<img src="img/crystal.png" class="crystal">
 							<img src="img/stand.png" class="stand">
-
 						</div>
-
-						
-
-						<!--<div class="pace">
-						</div>-->
-
 					</div>
 
 					<div class="joinBuffer">
-
           				<a href='#/chat'>
-						<div class="startButton">
-
-							<div class="startButtonBuffer">
-
-							Start Now
-
-								<div class="skew">
+							<div class="startButton">
+								<div class="startButtonBuffer">
+									Start Now
+									<div class="skew"></div>
 						    	</div>
-
-					    	</div>
-
-						</div>
+							</div>
          				</a>
-
 					</div>
-
 				</div>
-
 			</div>
-
-			
-
 		</section>
 
 		<section data-route="chat">
-
-		<!--<div style="float:left;width:100px;border-right:1px solid black;height:300px;padding:10px;overflow:scroll-y;">
-			<b>ROOMS</b>
-		
-		</div>-->	
-
-
 			<div class="window" style="background-color: #1296E0;">
-
 				<div class="header">
-
 					<a href='#/waitingRoom'>
-					<div class="logo">
-						HACKROULETTE
-					</div>
+						<div class="logo">
+							HACKROULETTE
+						</div>
 					</a>
-
 					<a href='#/waitingRoom'>
-					<div class="nextChat">
-
-						New Chat >
-
-					</div>
+						<div class="nextChat">
+							New Chat >
+						</div>
 					</a>
-
 				</div>
 
 				<div class="topic">
-
-					<div id="output"> </div>
-
+					<div id="output"></div>
 				</div>
 
 				<div id="chatTop">
-
+				
 					<div class="messageContainer">
-
 						<div id="conversation"></div>
-
 				    </div>
 
 				    <form action="">
-
-				      <input class="formInput" id="data" autocomplete="off" />
-				      <input type="button" id="datasend" class="formButton" value="Send" />
-
+						<input class="formInput" id="data" autocomplete="off" />
+						<input type="button" id="datasend" class="formButton" value="Send" />
 				    </form>
 
 				</div>
-
 			</div>
-
 		</section>
-
 
 		<script src="js/jquery.min.js"></script>
 		<script src="js/waypoint.js"></script>
-		<!--<script src="js/pace.js"></script>-->
 		<script src='js/director.min.js'></script>
 		<script src="js/particle.js"></script>
 		<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>

@@ -70,49 +70,53 @@ app.get('/tweets', function(req, res) {
         }
     });
 });
+
 var UserPoliticalAlignmentPair = [];
+
 var storeUserPoliticalAlignmentPair = function(uid, objArr) {
-  var newUserObj = {},
-      hash_table = {},
-      objects = objArr,
-      topPoliticalResult;
+    var newUserObj = {},
+        hash_table = {},
+        objects = objArr,
+        topPoliticalResult;
 
     // Loop through the objects, each object contains a a number of key value pairs
-  for(var i = 0; i < objects.length; i++) {
-    // For each key value pair
-    for(var key in objects[i]) {
-      // If our hash table already contains the key, add to its value
-      if(hash_table.hasOwnProperty(key)) {
-        hash_table[key] += objects[i][key];
-      // Otherwise, set the value
-      } else {
-        hash_table[key] = objects[i][key];
-      }
-    }
-  }
+    for(var i = 0; i < objects.length; i++) {
 
-  var party = "conservative";
-  var max = 0;
-  console.log(hash_table);
-  // Take the result and average it
-  for(var key in hash_table) {
-    hash_table[key] /= objects.length;
-    if(hash_table[key] > max){
-      party = key;
-      max = hash_table[key];
+        // For each key value pair
+        for(var key in objects[i]) {
+            // If our hash table already contains the key, add to its value
+            if(hash_table.hasOwnProperty(key)) {
+                hash_table[key] += objects[i][key];
+            // Otherwise, set the value
+            } else {
+                hash_table[key] = objects[i][key];
+            }
+        }
     }
-  }
-  // console.log(party);
-  newUserObj[uid] = party;
-  UserPoliticalAlignmentPair.push(newUserObj);
-  console.log(UserPoliticalAlignmentPair);
+
+    var party = "conservative";
+    var max = 0;
+    console.log(hash_table);
+    // Take the result and average it
+    for(var key in hash_table) {
+        hash_table[key] /= objects.length;
+        if(hash_table[key] > max){
+            party = key;
+            max = hash_table[key];
+        }
+    }
+
+    newUserObj[uid] = party;
+    UserPoliticalAlignmentPair.push(newUserObj);
+    console.log(UserPoliticalAlignmentPair);
 }
+
 var getPoliticalAlignment = function(strArr, uid, cb) {
-  indico.batchPolitical(strArr, indico_settings)
+    indico.batchPolitical(strArr, indico_settings)
     .then(function(res) {
-      cb(uid, res);
+        cb(uid, res);
     }).catch(function(err) {
-      console.warn(err);
+        console.warn(err);
     });
 }
 
@@ -122,54 +126,48 @@ app.get('/tags', function(request, response) {
 });
 
 http.listen(process.env.PORT || 3000, function() {
-  console.log('listening on port 3000');
+    console.log('listening on port 3000');
 });
 
-var batch = [
-    "Finally here! Eric Schmidt being the first keynote speaker.",
-    "This is a second tweet",
-    "This is a third tweet"
-];
-
 var getMaxTen = function(obj) {
-  var topTen = [];
-  for (var i = 0; i < 10; i++) {
-    var maxVal = _.max(obj);
-    topTen.push(maxVal);
-    console.log(maxVal);
-    delete obj[_.keys(maxVal)[0]];
-  };
-  console.log(_.allKeys(topTen));
+    var topTen = [];
+    for (var i = 0; i < 10; i++) {
+        var maxVal = _.max(obj);
+        topTen.push(maxVal);
+        console.log(maxVal);
+        delete obj[_.keys(maxVal)[0]];
+    };
+    console.log(_.allKeys(topTen));
 }
 
 // Currently takes in a batch of strings and averages the values into a javascript object
 // Can also use indico.batchTextTags
 app.get('/interests', function(req, res1) {
-  indico.batchTextTags(req.query.body, indico_settings)
+    indico.batchTextTags(req.query.body, indico_settings)
     .then(function(res) {
-      var objects = res;
-      var hash_table = {};
+        var objects = res;
+        var hash_table = {};
 
-      // Loop through the objects, each object contains a a number of key value pairs
-      for(var i = 0; i < objects.length; i++) {
-        // For each key value pair
-        for(var key in objects[i]) {
-          // If our hash table already contains the key, add to its value
-          if(hash_table.hasOwnProperty(key)) {
-            hash_table[key] += objects[i][key];
-          // Otherwise, set the value
-          } else {
-            hash_table[key] = objects[i][key];
-          }
+        // Loop through the objects, each object contains a a number of key value pairs
+        for(var i = 0; i < objects.length; i++) {
+            // For each key value pair
+            for(var key in objects[i]) {
+                // If our hash table already contains the key, add to its value
+                if(hash_table.hasOwnProperty(key)) {
+                    hash_table[key] += objects[i][key];
+                // Otherwise, set the value
+                } else {
+                    hash_table[key] = objects[i][key];
+                }
+            }
         }
-      }
 
-      // Take the result and average it
-      for(var key in hash_table) {
-        hash_table[key] /= objects.length;
-      }
-      // Result is a hash table of averaged values from indico
-      res1.send({interests: hash_table});
+        // Take the result and average it
+        for(var key in hash_table) {
+            hash_table[key] /= objects.length;
+        }
+        // Result is a hash table of averaged values from indico
+        res1.send({interests: hash_table});
     }).catch(function(err) {
       console.warn(err);
     });
