@@ -150,3 +150,103 @@ canvas {
 	cursor: pointer;
 	width: 20vw;
 }
+
+.backgroundColor {
+	width: 100vw;
+	height: 100vh;
+	background-color: #1296E0;
+	opacity: 0.7;
+}
+
+.lineBuffer {
+	height: 25vh;
+	width: 100vw;
+	position: relative;
+	top: 0;
+	left: 0;
+}
+
+.loadingLine {
+	width: 80vw;
+	height: 20px;
+	border: 1px solid white;
+	border-radius: 100px;
+	background-color: #fff;
+	display: inline-block;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translateY(-50%) translateX(-50%);
+	z-index: 1;
+}
+
+.loadingText {
+	position: absolute;
+	top: 7vh;
+  	right: 45vw;
+	width: 120px;
+	display: inline-block;
+	z-index: 2;
+	color: white;
+}
+
+.startButton {
+	width: 20vw;
+	height: 40px;
+	border: 1px solid white;
+	border-radius: 100px;
+	display: inline-block;
+	visibility: visible;
+	position: relative;
+	top: 0;
+	left: 0;
+	text-decoration: none;
+	color: #fff;
+}
+
+.startButtonBuffer {
+	width: calc(20vw + 1px);
+	padding-top: 10px;
+	padding-bottom: 10px;
+	height: 21px;
+	background-color: transparent;
+	border: 1px solid transparent;
+	border-radius: 100px;
+	display: inline-block;
+	overflow: hidden;
+	visibility: visible;
+	position: relative;
+	top: -2px;
+	left: -1px;
+	transition: 0.3s all linear;
+	text-decoration: none;
+}
+
+.startButton:hover {
+	cursor: pointer;
+	color: #1296E0;
+}
+
+.startButton:hover .skew {
+	position: absolute;
+	left: 0;
+	right: 0;
+	visibility: visible;
+}
+
+.dataText {
+	position: absolute;
+	top: 6vh;
+	left: 18vw;
+	width: 20vw;
+	text-align: left;
+	font-size: 1.1em;
+}
+
+.crystal {
+	width: 100px;
+}
+
+.stand {
+	width: 100px;
+}

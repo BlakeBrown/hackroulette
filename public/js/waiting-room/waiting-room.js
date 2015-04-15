@@ -1,7 +1,40 @@
 $(document).ready(function() {
 
+	var socket = io();
+
+	$.get('/tweets')
+        .done(function(res) {
+            console.log(res);
+            $.get('/interests', {body: res.tweets})
+                .done(function(res2) {
+                    console.log(res2);
+                        socket.emit('userAuth', {
+                        name: res.uid
+                    });
+                    var list = res2['interests'];
+                    var tops = [];
+                    for(var i = 0; i < 5; i++) {
+                        var max = 0;
+                        for(var key in list){
+                            if(list[key] > max){
+                                tops[i] = key;
+                                max = list[key];
+                            }
+                        }
+                        console.log(tops[i], max);
+                        delete list[tops[i]];
+                    }
+                    console.log(tops);
+                    $('.dataText').html('');
+                    $('.dataText').append("<strong>The hacking wizards sense that you are interested in:</strong><br>");
+                    for(var i = 0; i < 5; i++) {
+                        $('.dataText').append(document.createTextNode(tops[i]),"<br>");
+                    }
+                });
+        });
+
 	var num = 0, style = document.getElementById('loadingText').style;
-	
+
 	window.setInterval(function () {
 
 		setTimeout(function() {
