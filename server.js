@@ -44,6 +44,11 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 
+app.get('/', function (req, res) {
+  res.sendFile(__dirname + '/public/views/index.html');
+});
+
+
 app.get('/auth/twitter', passport.authenticate('twitter'));
 app.get('/auth/twitter/callback', passport.authenticate('twitter', { successRedirect: '/#/waitingRoom', failureRedirect: '/login' }));
 

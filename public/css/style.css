@@ -132,6 +132,7 @@ canvas {
 }
 
 .joinButton:hover .skew {
+	background-color: #D0FFFE;;
 	visibility: visible;
 	position: absolute;
 	left: 0%;
@@ -144,6 +145,8 @@ canvas {
 
 .joinButton:hover {
 	color: #062d42;
+	border-color: #D0FFFE;;
+	font-weight: bold;
 	cursor: pointer;
 	width: 20vw;
 }
