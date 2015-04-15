@@ -11,6 +11,7 @@ html {
 body{
 	margin:0;
 	font-family: Avenir Next;
+	overflow: hidden;
 }
 
 canvas{
@@ -32,8 +33,6 @@ canvas{
 }
 
 #particles-js{
-  min-width:100vw;
-  min-height: 100vh;
   background:#1296E0;
   opacity:0.3;
 }
