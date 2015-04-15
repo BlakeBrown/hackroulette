@@ -6,6 +6,7 @@ form {
 	font-family: Avenir Next;
 	text-align: center;
 }
+
 .formInput { 
 	border: 0; 
 	padding: 10px; 
@@ -13,7 +14,6 @@ form {
 	display: inline-block;
 	font-family: Avenir Next;  
 }
-
 
 .formButton { 
 	width: 10vw;
@@ -67,8 +67,8 @@ form {
 }
 #users_waiting_wrapper {
 	position: absolute;
-	left: 85vw;
-	top: -40vh;
+	left: 80vw;
+	top: -20vh;
 }
 #users_waiting_list {
 	list-style-type: none;

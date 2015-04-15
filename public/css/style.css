@@ -184,8 +184,8 @@ canvas {
 
 .loadingText {
 	position: absolute;
-	top: 0;
-	right: 29vw;
+	top: 7vh;
+  	right: 45vw;
 	width: 120px;
 	display: inline-block;
 	z-index: 2;
