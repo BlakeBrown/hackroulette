@@ -14,60 +14,40 @@
 	</head>
 
 	<body>
-
 		<div class="window">
-
-			<div class="backgroundColor">
-			</div>
-
+			<div class="backgroundColor"></div>
 			<div class="contentContainer">
 
 				<h1 class="title">HackRoulette</h1>
 
 				<div class="lineBuffer">
+					<div class="dataText"></div>
 
-					<div class="dataText">
-
-						Hello Mr. Conservative!<br><br>
-						Currently matching you with someone who is interested in Ponies and Rainbows.
-
+					<div id="users_waiting_wrapper">
+						<h1>Users waiting</h1>
+						<ul id="users_waiting_list"></ul>
 					</div>
 
 					<div class="loadingText" id="loadingText">
-
-						loading
-
+						<img src="img/crystal.png" class="crystal">
+						<img src="img/stand.png" class="stand">
 					</div>
-
-					<div class="pace">
-					</div>
-
 				</div>
 
 				<div class="joinBuffer">
-
-
-					<div class="startButton" style="visibility:visible">
-
-						Start Now
-
-						<div class="skew">
-				    	</div>
-
-					</div>
-
+      				<a href='#/chat'>
+						<div class="startButton">
+							<div class="startButtonBuffer">
+								Start Now
+								<div class="skew"></div>
+					    	</div>
+						</div>
+     				</a>
 				</div>
-
 			</div>
-
 		</div>
-
 	</body>
 
 <script src="js/jquery.min.js"></script>
-<script src="js/waypoint.js"></script>
-<script src="js/pace.js"></script>
-<script src="js/loading.js"></script>
-
 
 </html>

@@ -48,9 +48,12 @@ app.get('/', function (req, res) {
   res.sendFile(__dirname + '/public/views/index.html');
 });
 
+app.get('/waiting-room', function (req, res) {
+  res.sendFile(__dirname + '/public/views/waiting-room.html');
+});
 
 app.get('/auth/twitter', passport.authenticate('twitter'));
-app.get('/auth/twitter/callback', passport.authenticate('twitter', { successRedirect: '/#/waitingRoom', failureRedirect: '/login' }));
+app.get('/auth/twitter/callback', passport.authenticate('twitter', { successRedirect: '/waiting-room', failureRedirect: '/login' }));
 
 
 app.get('/tweets', function(req, res) {
