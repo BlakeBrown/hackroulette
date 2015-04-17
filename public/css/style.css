@@ -152,5 +152,15 @@ canvas {
 }
 
 .btn-twitter {
-	  background-color: #55acee;
+	background-color: #55acee;
+	padding: 10px;
+	border-radius: 5px;
+	text-decoration: none;
+	color: #fff;
+}
+.btn-twitter:hover {
+	background-color: #2795e9;
+}
+.twitter_container {
+	margin-top: 35px;
 }
