@@ -154,7 +154,7 @@ canvas {
 .backgroundColor {
 	width: 100vw;
 	height: 100vh;
-	background-color: #1296E0;
+	background-color: #26606B;
 	opacity: 0.7;
 }
 
@@ -190,7 +190,21 @@ canvas {
 	color: white;
 }
 
-.startButton {
+.start_button_fading{
+	width: 20vw;
+	height: 40px;
+	border: 1px solid white;
+	border-radius: 100px;
+	display: inline-block;
+	visibility: visible;
+	position: relative;
+	top: 0;
+	left: 0;
+	text-decoration: none;
+	color: #fff;
+}
+
+.start_button_solid {
 	width: 20vw;
 	height: 40px;
 	border: 1px solid white;
@@ -222,6 +236,32 @@ canvas {
 	text-decoration: none;
 }
 
+@keyframes flickerAnimation {
+  0%   { opacity:1; }
+  50%  { opacity:0; }
+  100% { opacity:1; }
+}
+@-o-keyframes flickerAnimation{
+  0%   { opacity:1; }
+  50%  { opacity:0; }
+  100% { opacity:1; }
+}
+@-moz-keyframes flickerAnimation{
+  0%   { opacity:1; }
+  50%  { opacity:0; }
+  100% { opacity:1; }
+}
+@-webkit-keyframes flickerAnimation{
+  0%   { opacity:1; }
+  50%  { opacity:0; }
+  100% { opacity:1; }
+}
+.animate-flicker {
+   -webkit-animation: flickerAnimation 2s infinite;
+   -moz-animation: flickerAnimation 2s infinite;
+   -o-animation: flickerAnimation 2s infinite;
+    animation: flickerAnimation 2s infinite;
+}
 .startButton:hover {
 	cursor: pointer;
 	color: #1296E0;
@@ -241,12 +281,4 @@ canvas {
 	width: 20vw;
 	text-align: left;
 	font-size: 1.1em;
-}
-
-.crystal {
-	width: 100px;
-}
-
-.stand {
-	width: 100px;
 }
