@@ -39,15 +39,15 @@ button.buttonmodal{
 }
 
 div.modalline {
-  background-color:#505050;
-  height:2px;
-  width:400px;
+  background-color: #fff;
+  height: 2px;
+  width: 400px;
   margin-right: auto;
   margin-left: auto;
-  margin-top:20px;
-  margin-bottom:30px;
-  opacity:0.2;
-  position:relative;
+  margin-top: 20px;
+  margin-bottom: 30px;
+  opacity: 0.2;
+  position: relative;
   z-index: 1000;
 }
 
@@ -83,10 +83,10 @@ img.modalbkgdprofile{
 }
 
 .modalText {
-  color:#505050;
+  color: #FFFFFF;
   z-index: 1000;
-  position:relative;
-  margin-bottom:20px;
+  position: relative;
+  margin-bottom: 20px;
 }
 
 .modalDialog > div {
@@ -95,7 +95,7 @@ img.modalbkgdprofile{
   margin: 10% auto;
   padding: 10px 20px 13px 20px;
   border-radius: 10px;
-  background: #9BE8FF;
+  background: #26606B;
   overflow: hidden;
 /*  background: -moz-linear-gradient(#a7e8d4, #24AA98);
   background: -webkit-linear-gradient(#a7e8d4, #24AA98);
@@ -105,7 +105,7 @@ img.modalbkgdprofile{
 
 .close {
   background: transparent;
-  color: #505050;
+  color: #98D4E4;
   line-height: 25px;
   position: absolute;
   right: 0px;
@@ -123,5 +123,5 @@ img.modalbkgdprofile{
 }
 
 .close:hover { 
-  color:#fff;
+  color: #BBC6CA;
  }
