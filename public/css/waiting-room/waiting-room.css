@@ -250,8 +250,8 @@ canvas {
 
 .dataText {
 	position: absolute;
-	top: 6vh;
-	left: 18vw;
+	top: 10vh;
+	left: 10vw;
 	width: 20vw;
 	text-align: left;
 	font-size: 1.1em;

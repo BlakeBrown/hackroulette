@@ -26,7 +26,7 @@ $(document).ready(function() {
                     }
                     console.log(tops);
                     $('.dataText').html('');
-                    $('.dataText').append("<strong>The hacking wizards sense that you are interested in:</strong><br>");
+                    $('.dataText').append("<strong style='margin-bottom:15px; display:block'>The hacking wizards sense that you are interested in:</strong>");
                     for(var i = 0; i < 5; i++) {
                         $('.dataText').append(document.createTextNode(tops[i]),"<br>");
                     }
