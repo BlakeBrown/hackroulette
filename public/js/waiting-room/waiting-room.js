@@ -33,18 +33,18 @@ $(document).ready(function() {
                 });
         });
 
-    $(".start_button_solid").on("mouseenter", function() {
+    $(".start_button").on("mouseenter", function() {
         // Set the button to it's current opacity
-        var current_opacity = $(".start_button_solid").css("opacity");
-        $(".start_button_solid").css("opacity", current_opacity);
+        var current_opacity = $(".start_button").css("opacity");
+        $(".start_button").css("opacity", current_opacity);
         // Remove the animation
-        $(".start_button_solid").removeClass("animate-flicker");
+        $(".start_button").removeClass("animate-flicker");
         // Fade the button to an opacity of 1
-        $(".start_button_solid").fadeTo("slow", 1);
+        $(".start_button").fadeTo("slow", 1);
     });
 
-    $(".start_button_solid").on("mouseleave", function() {
-        $(".start_button_solid").addClass("animate-flicker");
+    $(".start_button").on("mouseleave", function() {
+        $(".start_button").addClass("animate-flicker");
     });
 
 	setTimeout(function() {

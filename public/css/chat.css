@@ -67,8 +67,8 @@ form {
 }
 #users_waiting_wrapper {
 	position: absolute;
-	left: 80vw;
-	top: -20vh;
+	left: 75vw;
+	top: 5vh;
 }
 #users_waiting_list {
 	list-style-type: none;

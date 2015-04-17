@@ -6,7 +6,6 @@ html {
 	font-family: Avenir Next;
 	background-color: #000;
 	color:#fff;
-	text-align: center;
 }
 
 body {
@@ -75,9 +74,12 @@ canvas {
 }
 
 .joinBuffer {
+	position: absolute;
+	text-align: center;
 	margin-top:40px;
 	margin-bottom:20px;
 	width:100vw;
+	top: 50vh;
 }
 
 .joinButton {
@@ -190,21 +192,7 @@ canvas {
 	color: white;
 }
 
-.start_button_fading{
-	width: 20vw;
-	height: 40px;
-	border: 1px solid white;
-	border-radius: 100px;
-	display: inline-block;
-	visibility: visible;
-	position: relative;
-	top: 0;
-	left: 0;
-	text-decoration: none;
-	color: #fff;
-}
-
-.start_button_solid {
+.start_button {
 	width: 20vw;
 	height: 40px;
 	border: 1px solid white;
@@ -219,21 +207,7 @@ canvas {
 }
 
 .startButtonBuffer {
-	width: calc(20vw + 1px);
 	padding-top: 10px;
-	padding-bottom: 10px;
-	height: 21px;
-	background-color: transparent;
-	border: 1px solid transparent;
-	border-radius: 100px;
-	display: inline-block;
-	overflow: hidden;
-	visibility: visible;
-	position: relative;
-	top: -2px;
-	left: -1px;
-	transition: 0.3s all linear;
-	text-decoration: none;
 }
 
 @keyframes flickerAnimation {
@@ -281,4 +255,9 @@ canvas {
 	width: 20vw;
 	text-align: left;
 	font-size: 1.1em;
+}
+
+.user_waiting_list_disclaimer {
+	margin-top: 0;
+	margin-bottom: 15px;
 }
