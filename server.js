@@ -73,16 +73,15 @@ app.get('/tweets', function(req, res) {
     var client_id = req.user.token;
 
     var params = {screen_name: req.user.screen_name};
-    client.get('statuses/user_timeline', params, function(error, tweets, response){
+    client.get('statuses/user_timeline', params, function(error, tweets, response) {
       var retObj = {};
       retObj.tweets = [];
       if (!error) {
         for(i = 0; i < tweets.length; i++){
             retObj.tweets.push(tweets[i].text);
         }
-        retObj.uid = req.user.id;
 
-        addUserToApplication(client_id);
+        addClientToApplication(client_id);
         // getPoliticalAlignment(retObj.tweets, retObj.uid, storeUserPoliticalAlignmentPair);
         res.send(retObj);
         }
@@ -105,12 +104,13 @@ app.get('/user', function(req, res) {
             res.send(users[i]);
         }
     }
-    console.log("User not found");
 });
 
+// Global array of users who have authenticated
 var users = [];
 
-var addUserToApplication = function(user_id) {
+// Takes in a client id and generates a new user, adding them to the global array
+var addClientToApplication = function(user_id) {
 
     // Check if the user already exists before creating a new one
     for(var i = 0; i < users.length; i++) {
@@ -132,55 +132,6 @@ var addUserToApplication = function(user_id) {
 
     // Push the user to the global array
     users.push(user);
-}
-
-var UserPoliticalAlignmentPair = [];
-
-var storeUserPoliticalAlignmentPair = function(uid, objArr) {
-    var newUserObj = {},
-        hash_table = {},
-        objects = objArr,
-        topPoliticalResult;
-
-    // Loop through the objects, each object contains a a number of key value pairs
-    for(var i = 0; i < objects.length; i++) {
-
-        // For each key value pair
-        for(var key in objects[i]) {
-            // If our hash table already contains the key, add to its value
-            if(hash_table.hasOwnProperty(key)) {
-                hash_table[key] += objects[i][key];
-            // Otherwise, set the value
-            } else {
-                hash_table[key] = objects[i][key];
-            }
-        }
-    }
-
-    var party = "conservative";
-    var max = 0;
-    console.log(hash_table);
-    // Take the result and average it
-    for(var key in hash_table) {
-        hash_table[key] /= objects.length;
-        if(hash_table[key] > max){
-            party = key;
-            max = hash_table[key];
-        }
-    }
-
-    newUserObj[uid] = party;
-    UserPoliticalAlignmentPair.push(newUserObj);
-    console.log(UserPoliticalAlignmentPair);
-}
-
-var getPoliticalAlignment = function(strArr, uid, cb) {
-    indico.batchPolitical(strArr, indico_settings)
-    .then(function(res) {
-        cb(uid, res);
-    }).catch(function(err) {
-        console.warn(err);
-    });
 }
 
 app.get('/tags', function(request, response) {
@@ -236,7 +187,7 @@ app.get('/interests', function(req, res1) {
     });
 });
 
-// =============== CHAT ROOM W/ SOCKET.IO ==================
+// =============== SOCKET.IO ==================
 // usernames which are currently connected to the chat
 var usernames = {};
 
@@ -248,19 +199,8 @@ var users = [],
 
 io.sockets.on('connection', function (socket) {
 
-  // Enable the chat room button when there's more than 2 users on our site
-    socket.on('user auth', function(uid) {
-      console.log('Authenticated user');
-      usercount++;
-      users.push(uid);
-      console.log('uid:'+uid+' '+'count:'+usercount);
-      if (usercount>1) {
-        socket.emit('enable start button');
-      }
-    });
-
-    // Takes in a user object and adds them to the chatroom
-    socket.on('adduser', function(user) {
+    // Takes in a user object and adds them to the waiting list
+    socket.on('add_client_to_waiting_list', function(user) {
         // Generate a random username for the user
         var username = user.user_name;
 
@@ -271,6 +211,27 @@ io.sockets.on('connection', function (socket) {
         socket.emit('get_other_users_in_waiting_room', usernames); 
         // Update all the other users (excluding the client) with the new user
         socket.broadcast.emit('user_joined_waiting_room', username);
+
+        // Add the username to a global list
+        usernames[username] = username;
+
+        // store the room name in the socket session for this client
+        socket.room = 'room1';
+        // send client to room 1
+        socket.join('room1');
+        // echo to client they've connected
+        socket.emit('updatechat', 'SERVER', 'you have connected to room1');
+        // echo to room 1 that a person has connected to their room
+        socket.broadcast.to('room1').emit('updatechat', 'SERVER', username + ' has connected to this room');
+        socket.emit('updaterooms', rooms, 'room1');
+    });
+
+    // Takes in a user object and adds them to the chat
+    socket.on('add_client_to_chat', function(user) {
+        // Generate a random username for the user
+        var username = user.user_name;
+
+        socket.username = username;
 
         // Add the username to a global list
         usernames[username] = username;
