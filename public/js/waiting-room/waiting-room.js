@@ -2,33 +2,38 @@ $(document).ready(function() {
 
 	var socket = io();
 
+    // Custom prototype method to capitalize the first letter of a string
+    String.prototype.capitalizeFirstLetter = function() {
+        return this.charAt(0).toUpperCase() + this.slice(1);
+    }
+
+    // Get a list of tweets from twitter
 	$.get('/tweets')
         .done(function(res) {
-            console.log(res);
+            // Feed the list of tweets into Indico's API, getting the related topics/tags
             $.get('/interests', {body: res.tweets})
                 .done(function(res2) {
-                    console.log(res2);
                         socket.emit('userAuth', {
                         name: res.uid
                     });
+                    // Grab only the top 5 tags
                     var list = res2['interests'];
-                    var tops = [];
+                    var interests = [];
                     for(var i = 0; i < 5; i++) {
                         var max = 0;
                         for(var key in list){
                             if(list[key] > max){
-                                tops[i] = key;
+                                interests[i] = key;
                                 max = list[key];
                             }
                         }
-                        console.log(tops[i], max);
-                        delete list[tops[i]];
+                        delete list[interests[i]];
                     }
-                    console.log(tops);
+                    // Append the top 5 tags to the DOM
                     $('.dataText').html('');
                     $('.dataText').append("<strong style='margin-bottom:15px; display:block'>The hacking wizards sense that you are interested in:</strong>");
                     for(var i = 0; i < 5; i++) {
-                        $('.dataText').append(document.createTextNode(tops[i]),"<br>");
+                        $('.dataText').append("<p style='margin-top:0; margin-bottom:10px'>" + (i+1) + " - " + interests[i].replace(/_/g, " ").capitalizeFirstLetter() + "</p>");
                     }
                 });
         });
