@@ -16,16 +16,17 @@ body {
 }
 
 .window {
-	margin: 0px;
 	height: 100vh;
 	width: 100vw;
+	margin: 0px;
+	background-color: #26606B;
 	position: absolute;
 	top: 0;
 	left: 0;
 }
 
 form { 
-	background: #1296E0;
+	background: #26606B;
 	bottom: 5vh; 
 	width:100vw;
 	position: fixed; 
@@ -43,7 +44,7 @@ form {
 
 .formButton { 
 	width: 10vw;
-	background: rgb(130, 224, 255); 
+	background: #2BD8B8; 
 	border: none; 
 	margin-left: 5px;
 	padding-top: 9px;
@@ -88,6 +89,7 @@ form {
 	background: #eee;
 	text-align: left;
 }
+
 #chat{
 	background-color:blue;
 }
@@ -100,18 +102,19 @@ form {
 	height:50px;
 }
 
-.logo{
+.hackroulette_header {
 	position: absolute;
 	top:20px;
 	left:6vw;
-	font-family: 'bebas';
 	font-size: 1.3em;
+	font-weight: bold;
+	letter-spacing: 0.1em;
 	transition: all 0.2s linear;
 	color:white;
 }
 
-.logo:hover{
-	color:#052d43;
+.hackroulette_header:hover{
+	color: #052d43;
 	cursor: pointer;
 }
 
@@ -124,19 +127,24 @@ form {
 }
 
 .nextChat:hover{
-	color:#052d43;
+	color: #052d43;
 	cursor: pointer;
 }
 
-.topic {
-	width:80vw;
+#topic_wrapper {
+	text-align: center;
+}
+
+#topic {
+	width: 80vw;
+	height: 20px;
 	display: inline-block;
-	background-color: #FF8DD1;
+	background-color: #2BD8B8;
 	color:white;
 	margin-top:5px;
 	margin-bottom:5px;
 	padding-top: 10px;
 	padding-bottom: 10px;
 	border-radius: 100px;
-	border: 2px solid #FF8DD1;
+	border: 2px solid #2BD8B8;
 }
