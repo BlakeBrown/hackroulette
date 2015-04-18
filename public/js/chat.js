@@ -1,10 +1,23 @@
 $(document).ready(function() {
 
-var socket = io();
+	var socket = io();
+
+	// Get the user
+	$.ajax({
+		method: 'get',
+		url: 'user',
+		success: function(response) {
+			// Add the user to the chatroom
+			socket.emit('adduser', response);
+		},
+		error: function(response) {
+			console.log(response);
+		}
+	})
 
 	// On connection, add a user to the chat 
 	socket.on('connect', function(){
-		socket.emit('adduser');
+		// 
 	});
 
 	// When a client joins, add their username to the waiting room

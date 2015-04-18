@@ -43,8 +43,9 @@ form {
 }
 
 .formButton { 
+	background: #2D9E89; 
+	color: #fff;
 	width: 10vw;
-	background: #2BD8B8; 
 	border: none; 
 	margin-left: 5px;
 	padding-top: 9px;
@@ -139,12 +140,12 @@ form {
 	width: 80vw;
 	height: 20px;
 	display: inline-block;
-	background-color: #2BD8B8;
+	background-color: #2D9E89;
 	color:white;
 	margin-top:5px;
 	margin-bottom:5px;
 	padding-top: 10px;
 	padding-bottom: 10px;
 	border-radius: 100px;
-	border: 2px solid #2BD8B8;
+	border: 2px solid #2D9E89;
 }

@@ -61,12 +61,16 @@ app.get('/auth/twitter/callback', passport.authenticate('twitter', { successRedi
 
 
 app.get('/tweets', function(req, res) {
+
     var client = new Twitter({
         consumer_key: '1n20OYq3cIpIUkp4EEq3d8Nbp',
         consumer_secret: '8ZTnyTgFT7pvVckbaHHJdOPylqz8jxKyZdrbrNfobrnytt8F0l',
         access_token_key: req.user.token,
         access_token_secret: req.user.secret
     });
+
+    // Store the user token from the request
+    var client_id = req.user.token;
 
     var params = {screen_name: req.user.screen_name};
     client.get('statuses/user_timeline', params, function(error, tweets, response){
@@ -77,11 +81,58 @@ app.get('/tweets', function(req, res) {
             retObj.tweets.push(tweets[i].text);
         }
         retObj.uid = req.user.id;
-        getPoliticalAlignment(retObj.tweets, retObj.uid, storeUserPoliticalAlignmentPair);
+
+        addUserToApplication(client_id);
+        // getPoliticalAlignment(retObj.tweets, retObj.uid, storeUserPoliticalAlignmentPair);
         res.send(retObj);
         }
     });
 });
+
+// Gets a user who has authenticated with twitter
+app.get('/user', function(req, res) {
+
+    var user_id = req.user.token;
+
+    // Find the user
+    for(var i = 0; i < users.length; i++) {
+        if(users[i].user_id == user_id) {
+            console.log("found user");
+            io.sockets.on('connection', function (socket) {
+                socket.emit('adduser', users[i]);
+            });
+            // Reply back to the client with the user
+            res.send(users[i]);
+        }
+    }
+    console.log("User not found");
+});
+
+var users = [];
+
+var addUserToApplication = function(user_id) {
+
+    // Check if the user already exists before creating a new one
+    for(var i = 0; i < users.length; i++) {
+        if(users[i].user_id == user_id) {
+            return;
+        }
+    }
+
+    // Generate a random username for the user
+    var chance = new Chance();
+    var username = chance.name();
+
+    // Construct the user object
+    var user = {
+        user_id: user_id,
+        user_name: username,
+        status: "Online"
+    }
+
+    // Push the user to the global array
+    users.push(user);
+}
 
 var UserPoliticalAlignmentPair = [];
 
@@ -208,12 +259,10 @@ io.sockets.on('connection', function (socket) {
       }
     });
 
-    // when the client emits 'adduser', this listens and executes
-    socket.on('adduser', function(){
-
+    // Takes in a user object and adds them to the chatroom
+    socket.on('adduser', function(user) {
         // Generate a random username for the user
-        var chance = new Chance();
-        var username = chance.name();
+        var username = user.user_name;
 
         socket.username = username;
         // Update the client to let him to know he/she joined
@@ -246,7 +295,7 @@ io.sockets.on('connection', function (socket) {
     socket.on('switchRoom', function(newroom){
         socket.leave(socket.room);
         socket.join(newroom);
-        socket.emit('updatechat', 'SERVER', 'you have connected to '+ newroom);
+        socket.emit('updatechat', 'SERVER', 'you have connected to ' + newroom);
         // sent message to OLD room
         socket.broadcast.to(socket.room).emit('updatechat', 'SERVER', socket.username+' has left this room');
         // update socket session room title
