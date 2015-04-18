@@ -52,6 +52,10 @@ app.get('/waiting-room', function (req, res) {
   res.sendFile(__dirname + '/public/views/waiting-room.html');
 });
 
+app.get('/chat', function (req, res) {
+  res.sendFile(__dirname + '/public/views/chat.html');
+});
+
 app.get('/auth/twitter', passport.authenticate('twitter'));
 app.get('/auth/twitter/callback', passport.authenticate('twitter', { successRedirect: '/waiting-room', failureRedirect: '/login' }));
 

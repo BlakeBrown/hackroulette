@@ -1,3 +1,29 @@
+html {
+	margin: 0px;
+	padding: 0px;
+	height: 100%;
+	font-size: 14px;
+	font-family: Avenir Next;
+	background-color: #000;
+	color:#fff;
+}
+
+body {
+	margin: 0;
+	height: 100%;
+	font-family: Avenir Next;
+	overflow: hidden;
+}
+
+.window {
+	margin: 0px;
+	height: 100vh;
+	width: 100vw;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
 form { 
 	background: #1296E0;
 	bottom: 5vh; 
@@ -65,20 +91,7 @@ form {
 #chat{
 	background-color:blue;
 }
-#users_waiting_wrapper {
-	width: 18%;
-	position: absolute;
-	left: 75vw;
-	top: 5vh;
-}
-#users_waiting_list {
-	list-style-type: none;
-	padding: 0;
-	text-align: left;
-}
-#client_list_item {
-	color: #FFDD2E;
-}
+
 .header {
 	width:100vw;
 	position: relative;

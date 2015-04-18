@@ -43,6 +43,23 @@ section {
 	left: 0;
 }
 
+#users_waiting_wrapper {
+	width: 18%;
+	position: absolute;
+	left: 75vw;
+	top: 5vh;
+}
+
+#users_waiting_list {
+	list-style-type: none;
+	padding: 0;
+	text-align: left;
+}
+
+#client_list_item {
+	color: #FFDD2E;
+}
+
 .contentContainer{
 	position: absolute;
 	top: 53vh;
@@ -167,9 +184,4 @@ section {
 	width: 20vw;
 	text-align: left;
 	font-size: 1.1em;
-}
-
-.user_waiting_list_disclaimer {
-	margin-top: 0;
-	margin-bottom: 15px;
 }

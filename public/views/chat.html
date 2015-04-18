@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>HackRoulette</title>
+		<link rel="stylesheet" type="text/css" href="css/animate.css">
+		<link rel="stylesheet" type="text/css" href="css/modal.css">
+		<link rel="stylesheet" type="text/css" href="css/chat/chat.css">
+		<link rel="icon" href="img/favicon.png">
+	</head>
+
+	<body>
+		<div class="window" style="background-color: #1296E0;">
+			<div class="header">
+				<a href='#/waitingRoom'>
+					<div class="logo">
+						HACKROULETTE
+					</div>
+				</a>
+				<a href='#/waitingRoom'>
+					<div class="nextChat">
+						New Chat >
+					</div>
+				</a>
+			</div>
+
+			<div class="topic">
+				<div id="output"></div>
+			</div>
+
+			<div id="chatTop">
+			
+				<div class="messageContainer">
+					<div id="conversation"></div>
+			    </div>
+
+			    <form action="">
+					<input class="formInput" id="data" autocomplete="off" />
+					<input type="button" id="datasend" class="formButton" value="Send" />
+			    </form>
+
+			</div>
+		</div>
+	</body>
+
+	<script src="js/jquery.min.js"></script>
+	<script src='js/director.min.js'></script>
+	<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+	<script src="js/chat.js"></script>
+	<script src="js/waiting-room/waiting-room.js"></script>
+	<script src="js/script.js"></script>
+</html>
