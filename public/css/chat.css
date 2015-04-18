@@ -66,6 +66,7 @@ form {
 	background-color:blue;
 }
 #users_waiting_wrapper {
+	width: 18%;
 	position: absolute;
 	left: 75vw;
 	top: 5vh;

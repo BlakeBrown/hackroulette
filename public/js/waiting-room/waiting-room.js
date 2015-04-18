@@ -40,11 +40,14 @@ $(document).ready(function() {
         // Remove the animation
         $(".start_button").removeClass("animate-flicker");
         // Fade the button to an opacity of 1
-        $(".start_button").fadeTo("slow", 1);
+        $(".start_button").fadeTo(100, 1, function() {
+            $(".start_button").addClass("start_button_after_fade_in");
+        });
     });
 
     $(".start_button").on("mouseleave", function() {
         $(".start_button").addClass("animate-flicker");
+        $(".start_button").removeClass("start_button_after_fade_in");
     });
 
 	setTimeout(function() {
