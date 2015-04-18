@@ -16,15 +16,15 @@ $(document).ready(function() {
             addClientInterests(response);
         });
 
-    // Gets an authenticated client and adds them to waiting list, notifying all users
+    // Gets an authenticated client and adds them to waiting room, notifying all users
     function addClientToWaitingList() {
         // Get the client
         $.ajax({
             method: 'get',
             url: 'user',
             success: function(response) {
-                // Add the client to the waiting list
-                socket.emit('add_client_to_waiting_list', response);
+                // Add the client to the waiting room
+                socket.emit('add_client_to_waiting_room', response);
             },
             error: function(response) {
                 console.log(response);
@@ -59,25 +59,29 @@ $(document).ready(function() {
     }
 
     // When a client joins, add their username to the waiting room
-    socket.on('client_joined_waiting_room', function(username) {
-        $('#users_waiting_list').append('<li class="user_list_item" id="client_list_item" data-username="' + username+ '">' + username + ' (You!)</li>');
+    socket.on('client_joined_waiting_room', function(user) {
+        $('#users_waiting_list').append('<li class="user_list_item" id="client_list_item" data-user-index="' + user.user_index + '">' + user.user_name + ' (You!)</li>');
     });
 
     // When a client joins, get the other users in the waiting room
-    socket.on('get_other_users_in_waiting_room', function(usernames) {
-        for(var key in usernames) {
-            $('#users_waiting_list').append('<li class="user_list_item" data-username="' + key + '">' + key + '</li>');
+    socket.on('get_other_users_in_waiting_room', function(users) {
+        for(var i = 0; i < users.length; i++) {
+            // If the user is in the waiting room
+            if(users[i].status == "waiting") {
+                // Append the user to the DOM
+                $('#users_waiting_list').append('<li class="user_list_item" data-username="' + users[i].user_index + '">' + users[i].user_name + '</li>');
+            }
         }
     });
 
     // When a client joins, update all the other users (excluding the client) with the new user
-    socket.on('user_joined_waiting_room', function(username) {
-        $('#users_waiting_list').append('<li class="user_list_item" data-username="' + username + '">' + username + '</li>');
+    socket.on('user_joined_waiting_room', function(user) {
+        $('#users_waiting_list').append('<li class="user_list_item" data-user-index="' + user.user_index + '">' + user.user_name + '</li>');
     });
 
     // When a client leaves, update all the other users
-    socket.on('user_left_waiting_room', function(username) {
-        $('.user_list_item[data-username="' + username + '"').remove();
+    socket.on('user_left_waiting_room', function(user_index) {
+        $('.user_list_item[data-user-index="' + user_index + '"').remove();
     });
 
     $(".start_button").on("mouseenter", function() {

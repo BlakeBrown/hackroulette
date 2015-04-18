@@ -126,8 +126,7 @@ var addClientToApplication = function(user_id) {
     // Construct the user object
     var user = {
         user_id: user_id,
-        user_name: username,
-        status: "Online"
+        user_name: username
     }
 
     // Push the user to the global array
@@ -188,32 +187,32 @@ app.get('/interests', function(req, res1) {
 });
 
 // =============== SOCKET.IO ==================
-// usernames which are currently connected to the chat
-var usernames = {};
+// Global array of users who are connected and are either in the waiting room or chat room
+var connected_users = [];
 
 // rooms which are currently available in chat
 var rooms = ['room1','room2','room3'];
 
-var users = [],
-    usercount = 0;
-
 io.sockets.on('connection', function (socket) {
 
-    // Takes in a user object and adds them to the waiting list
-    socket.on('add_client_to_waiting_list', function(user) {
-        // Generate a random username for the user
-        var username = user.user_name;
+    // Takes in a user object and adds them to the waiting list + waiting room
+    socket.on('add_client_to_waiting_room', function(user) {
+        // Give the user an unique index identifier (since if the same person opens two tabs, we want to consider them as two users even though they have the same authentication ID)
+        user.user_index = connected_users.length; 
+        // Update the user status to "waiting" (in the waiting room)
+        user.status = "waiting";
+        // Store the user in the current connection
+        socket.user = user;
 
-        socket.username = username;
         // Update the client to let him to know he/she joined
-        socket.emit('client_joined_waiting_room', username);
-        // Update only the new user with the other people waiting in the chat room
-        socket.emit('get_other_users_in_waiting_room', usernames); 
+        socket.emit('client_joined_waiting_room', user);
+        // Update the client with the other people in the waiting room
+        socket.emit('get_other_users_in_waiting_room', connected_users); 
         // Update all the other users (excluding the client) with the new user
-        socket.broadcast.emit('user_joined_waiting_room', username);
+        socket.broadcast.emit('user_joined_waiting_room', user);
 
-        // Add the username to a global list
-        usernames[username] = username;
+        // Add the user to the global waiting room list
+        connected_users.push(user);
 
         // store the room name in the socket session for this client
         socket.room = 'room1';
@@ -222,19 +221,22 @@ io.sockets.on('connection', function (socket) {
         // echo to client they've connected
         socket.emit('updatechat', 'SERVER', 'you have connected to room1');
         // echo to room 1 that a person has connected to their room
-        socket.broadcast.to('room1').emit('updatechat', 'SERVER', username + ' has connected to this room');
+        socket.broadcast.to('room1').emit('updatechat', 'SERVER', user.user_name + ' has connected to this room');
         socket.emit('updaterooms', rooms, 'room1');
     });
 
     // Takes in a user object and adds them to the chat
     socket.on('add_client_to_chat', function(user) {
-        // Generate a random username for the user
-        var username = user.user_name;
 
-        socket.username = username;
+        // Give the user an unique index identifier (since if the same person opens two tabs, we want to consider them as two users even though they have the same authentication ID)
+        user.user_index = connected_users.length; 
+        // Update the user status to "chat" (in the chat room)
+        user.status = "chat";
+        // Store the user in the current connection
+        socket.user = user;
 
-        // Add the username to a global list
-        usernames[username] = username;
+        // Add the user to the global chat room list
+        connected_users.push(user);
 
         // store the room name in the socket session for this client
         socket.room = 'room1';
@@ -243,14 +245,14 @@ io.sockets.on('connection', function (socket) {
         // echo to client they've connected
         socket.emit('updatechat', 'SERVER', 'you have connected to room1');
         // echo to room 1 that a person has connected to their room
-        socket.broadcast.to('room1').emit('updatechat', 'SERVER', username + ' has connected to this room');
+        socket.broadcast.to('room1').emit('updatechat', 'SERVER', user.user_name + ' has connected to this room');
         socket.emit('updaterooms', rooms, 'room1');
     });
 
     // when the client emits 'sendchat', this listens and executes
     socket.on('sendchat', function (data) {
         // we tell the client to execute 'updatechat' with 2 parameters
-        io.sockets.in(socket.room).emit('updatechat', socket.username, data);
+        io.sockets.in(socket.room).emit('updatechat', socket.user.user_name, data);
     });
 
     socket.on('switchRoom', function(newroom){
@@ -258,23 +260,30 @@ io.sockets.on('connection', function (socket) {
         socket.join(newroom);
         socket.emit('updatechat', 'SERVER', 'you have connected to ' + newroom);
         // sent message to OLD room
-        socket.broadcast.to(socket.room).emit('updatechat', 'SERVER', socket.username+' has left this room');
+        socket.broadcast.to(socket.room).emit('updatechat', 'SERVER', socket.user.user_name+' has left this room');
         // update socket session room title
         socket.room = newroom;
-        socket.broadcast.to(newroom).emit('updatechat', 'SERVER', socket.username+' has joined this room');
+        socket.broadcast.to(newroom).emit('updatechat', 'SERVER', socket.user.user_name +' has joined this room');
         socket.emit('updaterooms', rooms, newroom);
     });
 
-    // when the user disconnects.. perform this
-    socket.on('disconnect', function(){
-        // Update all of the other users in the waiting room to show the user left
-        socket.broadcast.emit('user_left_waiting_room', socket.username);
-        // remove the username from global usernames list
-        delete usernames[socket.username];
-        // update list of users in chat, client-side
-        io.sockets.emit('updateusers', usernames);
-        // echo globally that this client has left
-        socket.broadcast.emit('updatechat', 'SERVER', socket.username + ' has disconnected');
+    // Called when the client disconnects, removes the client from the application
+    socket.on('disconnect', function() {
+        console.log("user left the " + socket.user.status);
+        // If the user is in the waiting room, update the other users to show they left
+        if(socket.user.status = "waiting") {
+            socket.broadcast.emit('user_left_waiting_room', socket.user.user_index);
+        } else {
+            // Otherwise the client is in the chat room, update the other users to show they left
+            socket.broadcast.emit('updatechat', 'SERVER', socket.user.user_name + ' has disconnected'); 
+        }
+
+        // Remove the user from the global array
+        for(var i = 0; i < connected_users.length; i++) {
+            if(connected_users[i].user_index == socket.user.user_index) {
+               connected_users.splice(i, 1);
+            }
+        }
         socket.leave(socket.room);
     });
 });
