@@ -88,21 +88,26 @@ app.get('/tweets', function(req, res) {
     });
 });
 
-// Gets a user who has authenticated with twitter
+// Get a user who has authenticated with twitter
 app.get('/user', function(req, res) {
 
-    var user_id = req.user.token;
+    if(req.user) {    
 
-    // Find the user
-    for(var i = 0; i < users.length; i++) {
-        if(users[i].user_id == user_id) {
-            console.log("found user");
-            io.sockets.on('connection', function (socket) {
-                socket.emit('adduser', users[i]);
-            });
-            // Reply back to the client with the user
-            res.send(users[i]);
+        var user_id = req.user.token;
+
+        // Find the user
+        for(var i = 0; i < users.length; i++) {
+            if(users[i].user_id == user_id) {
+                console.log("found user");
+                io.sockets.on('connection', function (socket) {
+                    socket.emit('adduser', users[i]);
+                });
+                // Reply back to the client with the user
+                res.send(users[i]);
+            }
         }
+    } else {
+        res.send("Could not find user");
     }
 });
 
@@ -222,58 +227,64 @@ io.sockets.on('connection', function (socket) {
         user.user_index = connected_users.length; 
         // Update the user status to "chat" (in the chat room)
         user.status = "chat";
-        // Store the user in the current connection
+        // Store the user in the socket session
         socket.user = user;
 
         // Add the user to the global chat room list
         connected_users.push(user);
 
-        // store the room name in the socket session for this client
+        // Store the room name in the socket session
         socket.room = 'room1';
-        // send client to room 1
+        // Send the client to room 1
         socket.join('room1');
-        // echo to client they've connected
-        socket.emit('updatechat', 'SERVER', 'you have connected to room1');
-        // echo to room 1 that a person has connected to their room
-        socket.broadcast.to('room1').emit('updatechat', 'SERVER', user.user_name + ' has connected to this room');
+        // Tell the client they've connected
+        socket.emit('send_server_message', 'you have connected to room1');
+        // Store the user client side
+        socket.emit('store_connected_user', user);
+        // Tell other users in the room that another user has connected
+        socket.broadcast.to('room1').emit('send_server_message', user.user_name + ' has connected to this room');
         socket.emit('updaterooms', rooms, 'room1');
     });
 
     // when the client emits 'sendchat', this listens and executes
     socket.on('sendchat', function (data) {
         // we tell the client to execute 'updatechat' with 2 parameters
-        io.sockets.in(socket.room).emit('updatechat', socket.user.user_name, data);
+        io.sockets.in(socket.room).emit('send_message', socket.user, data);
     });
 
     socket.on('switchRoom', function(newroom){
         socket.leave(socket.room);
         socket.join(newroom);
-        socket.emit('updatechat', 'SERVER', 'you have connected to ' + newroom);
+        socket.emit('send_server_message', 'you have connected to ' + newroom);
         // sent message to OLD room
-        socket.broadcast.to(socket.room).emit('updatechat', 'SERVER', socket.user.user_name+' has left this room');
+        socket.broadcast.to(socket.room).emit('send_server_message', socket.user.user_name + ' has left this room');
         // update socket session room title
         socket.room = newroom;
-        socket.broadcast.to(newroom).emit('updatechat', 'SERVER', socket.user.user_name +' has joined this room');
+        socket.broadcast.to(newroom).emit('send_server_message', socket.user.user_name +' has joined this room');
         socket.emit('updaterooms', rooms, newroom);
     });
 
     // Called when the client disconnects, removes the client from the application
     socket.on('disconnect', function() {
-        console.log("user left the " + socket.user.status);
-        // If the user is in the waiting room, update the other users to show they left
-        if(socket.user.status = "waiting") {
-            socket.broadcast.emit('user_left_waiting_room', socket.user.user_index);
-        } else {
-            // Otherwise the client is in the chat room, update the other users to show they left
-            socket.broadcast.emit('updatechat', 'SERVER', socket.user.user_name + ' has disconnected'); 
-        }
-
-        // Remove the user from the global array
-        for(var i = 0; i < connected_users.length; i++) {
-            if(connected_users[i].user_index == socket.user.user_index) {
-               connected_users.splice(i, 1);
+        if(socket.user) {
+            console.log("user left the " + socket.user.status + "room");
+            // If the user is in the waiting room, update the other users to show they left
+            if(socket.user.status = "waiting") {
+                socket.broadcast.emit('user_left_waiting_room', socket.user.user_index);
+            } else {
+                // Otherwise the client is in the chat room, update the other users to show they left
+                socket.broadcast.emit('send_server_message', socket.user.user_name + ' has disconnected'); 
             }
+
+            // Remove the user from the global array
+            for(var i = 0; i < connected_users.length; i++) {
+                if(connected_users[i].user_index == socket.user.user_index) {
+                   connected_users.splice(i, 1);
+                }
+            }
+            socket.leave(socket.room);
+        } else {
+            console.log("Could not find user who disconnected");
         }
-        socket.leave(socket.room);
     });
 });

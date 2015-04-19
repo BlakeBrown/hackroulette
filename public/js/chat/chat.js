@@ -1,6 +1,8 @@
 $(document).ready(function() {
 
 	var socket = io();
+	// Client is the currently connected user
+	var client;
 
 	// On connection, add a user to the chat 
 	socket.on('connect', function() {
@@ -18,9 +20,24 @@ $(document).ready(function() {
         })
 	});
 
-	// listener, whenever the server emits 'updatechat', this updates the chat body
-	socket.on('updatechat', function (username, data) {
-		$('#conversation').append('<b>' + username + ':</b> ' + data + '<br>');
+	// Store the client in a variable
+	socket.on('store_connected_user', function(user) {
+		client = user; 
+	});	
+
+	// Updates the chat with a message from the server
+	socket.on('send_server_message', function (data) {
+		$('#conversation').append('<span style="color:rgb(88, 231, 215)"><b>SERVER:</b> ' + data + '<br></span>');
+	});
+
+
+	// Updates the chat with a message from a user
+	socket.on('send_message', function (user, data) {
+		if(user.user_index == client.user_index) {
+			$('#conversation').append('<span style="color:#FFDD2E"><b>You:</b> ' + data + '<br></span>');
+		} else {
+			$('#conversation').append('<b>' + user.user_name + ':</b> ' + data + '<br>');
+		}
 	});
 
 	// listener, whenever the server emits 'updaterooms', this updates the room the client is in
