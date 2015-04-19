@@ -59,7 +59,7 @@ app.get('/chat', function (req, res) {
 app.get('/auth/twitter', passport.authenticate('twitter'));
 app.get('/auth/twitter/callback', passport.authenticate('twitter', { successRedirect: '/waiting-room', failureRedirect: '/login' }));
 
-
+// Gets all of a users tweets
 app.get('/tweets', function(req, res) {
 
     var client = new Twitter({
@@ -82,7 +82,6 @@ app.get('/tweets', function(req, res) {
         }
 
         addClientToApplication(client_id);
-        // getPoliticalAlignment(retObj.tweets, retObj.uid, storeUserPoliticalAlignmentPair);
         res.send(retObj);
         }
     });
@@ -138,28 +137,11 @@ var addClientToApplication = function(user_id) {
     users.push(user);
 }
 
-app.get('/tags', function(request, response) {
-    console.log(request.query);
-    response.end("hello");
-});
-
 http.listen(process.env.PORT || 3000, function() {
     console.log('listening on port 3000');
 });
 
-var getMaxTen = function(obj) {
-    var topTen = [];
-    for (var i = 0; i < 10; i++) {
-        var maxVal = _.max(obj);
-        topTen.push(maxVal);
-        console.log(maxVal);
-        delete obj[_.keys(maxVal)[0]];
-    };
-    console.log(_.allKeys(topTen));
-}
-
-// Currently takes in a batch of strings and averages the values into a javascript object
-// Can also use indico.batchTextTags
+// Gets a users interests from indico's API
 app.get('/interests', function(req, res1) {
     indico.batchTextTags(req.query.body, indico_settings)
     .then(function(res) {
@@ -191,14 +173,17 @@ app.get('/interests', function(req, res1) {
     });
 });
 
-// =============== SOCKET.IO ==================
+// ======================================================================================
+// =============================== SOCKET.IO ============================================
+// ======================= Welcome to websocket land ====================================
+// ======================================================================================
+
 // Global array of users who are connected and are either in the waiting room or chat room
 var connected_users = [];
 var user_count = 0;
 
 // Start the server with one empty room
 var socket_rooms = [{room: "room1", users: []}];
-var rooms = ['room1','room2','room3'];
 
 io.sockets.on('connection', function (socket) {
 
@@ -259,8 +244,6 @@ io.sockets.on('connection', function (socket) {
             room_joined = new_room.room;
         }
 
-        console.log(socket_rooms);
-
         // Store the room name in the socket session
         socket.room = room_joined;
         // Send the client to room 1
@@ -271,7 +254,6 @@ io.sockets.on('connection', function (socket) {
         socket.emit('store_connected_user', user);
         // Tell other users in the room that another user has connected
         socket.broadcast.to(room_joined).emit('send_server_message', user.user_name + ' has connected to this room');
-        socket.emit('updaterooms', rooms, room_joined);
     });
 
     // when the client emits 'sendchat', this listens and executes
@@ -280,22 +262,10 @@ io.sockets.on('connection', function (socket) {
         io.sockets.in(socket.room).emit('send_message', socket.user, data);
     });
 
-    socket.on('switchRoom', function(newroom){
-        socket.leave(socket.room);
-        socket.join(newroom);
-        socket.emit('send_server_message', 'you have connected to ' + newroom);
-        // sent message to OLD room
-        socket.broadcast.to(socket.room).emit('send_server_message', socket.user.user_name + ' has left this room');
-        // update socket session room title
-        socket.room = newroom;
-        socket.broadcast.to(newroom).emit('send_server_message', socket.user.user_name +' has joined this room');
-        socket.emit('updaterooms', rooms, newroom);
-    });
-
     // Called when the client disconnects, removes the client from the application
     socket.on('disconnect', function() {
         if(socket.user) {
-            console.log("user left the " + socket.user.status + "room");
+            console.log("User left the " + socket.user.status + " room");
             // If the user is in the waiting room, update the other users to show they left
             if(socket.user.status == "waiting") {
                 socket.broadcast.emit('user_left_waiting_room', socket.user.user_index);
@@ -311,7 +281,7 @@ io.sockets.on('connection', function (socket) {
                             if(socket_rooms[i].users[j].user_index == socket.user.user_index) {
                                 // Remove the user
                                 socket_rooms[i].users.splice(j, 1);
-                                console.log("User removed from" + socket_rooms[i].room);
+                                console.log("User removed from " + socket_rooms[i].room);
                             }
                         }
                     }

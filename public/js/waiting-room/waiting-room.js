@@ -39,7 +39,7 @@ $(document).ready(function() {
         client = user; 
     }); 
 
-    // Gets the list of interests for an authenticated client and appends them to the waiting room
+    // Gets the list of interests for an authenticated client and appends their top 5 to the waiting room
     function addClientInterests(res) {
         $.get('/interests', {body: res.tweets})
             .done(function(res2) {
