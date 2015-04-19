@@ -197,7 +197,7 @@ var connected_users = [];
 var user_count = 0;
 
 // Start the server with one empty room
-var socket_rooms = [{room: "room0", users: []}];
+var socket_rooms = [{room: "room1", users: []}];
 var rooms = ['room1','room2','room3'];
 
 io.sockets.on('connection', function (socket) {
@@ -254,21 +254,23 @@ io.sockets.on('connection', function (socket) {
         // If the user didn't join a room (none were available)
         if(!room_joined) {
             // Create a new room and put the user in it
-            var new_room = {room: "room" + socket_rooms.length, users: [user]};
+            var new_room = {room: "room" + (socket_rooms.length + 1), users: [user]};
             socket_rooms.push(new_room);
             room_joined = new_room.room;
         }
+
+        console.log(socket_rooms);
 
         // Store the room name in the socket session
         socket.room = room_joined;
         // Send the client to room 1
         socket.join(room_joined);
         // Tell the client they've connected
-        socket.emit('send_server_message', 'you have connected to ' + room_joined);
+        socket.emit('send_server_message', 'you have connected to room ' + room_joined.substring(4));
         // Store the user client side
         socket.emit('store_connected_user', user);
         // Tell other users in the room that another user has connected
-        socket.broadcast.to('room1').emit('send_server_message', user.user_name + ' has connected to this room');
+        socket.broadcast.to(room_joined).emit('send_server_message', user.user_name + ' has connected to this room');
         socket.emit('updaterooms', rooms, room_joined);
     });
 
@@ -299,7 +301,21 @@ io.sockets.on('connection', function (socket) {
                 socket.broadcast.emit('user_left_waiting_room', socket.user.user_index);
             } else {
                 // Otherwise the client is in the chat room, update the other users to show they left
-                socket.broadcast.emit('send_server_message', socket.user.user_name + ' has left this room'); 
+                io.sockets.in(socket.room).emit('send_server_message', socket.user.user_name + ' has left this room'); 
+                // Also remove the user from the room
+                for(var i = 0; i < socket_rooms.length; i++) {
+                    // Find the room the user was in
+                    if(socket_rooms[i].room == socket.room) {
+                        // Find the user 
+                        for(var j = 0; j < socket_rooms[i].users.length; j++) {
+                            if(socket_rooms[i].users[j].user_index == socket.user.user_index) {
+                                // Remove the user
+                                socket_rooms[i].users.splice(j, 1);
+                                console.log("User removed from" + socket_rooms[i].room);
+                            }
+                        }
+                    }
+                }
             }
 
             // Remove the user from the global array
