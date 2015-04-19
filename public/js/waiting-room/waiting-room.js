@@ -1,6 +1,8 @@
 $(document).ready(function() {
 
 	var socket = io();
+    // Client is the currently connected user
+    var client;
 
     // Custom prototype method to capitalize the first letter of a string
     String.prototype.capitalizeFirstLetter = function() {
@@ -32,6 +34,11 @@ $(document).ready(function() {
         })
     }
 
+    // Store the client in a variable
+    socket.on('store_connected_user', function(user) {
+        client = user; 
+    }); 
+
     // Gets the list of interests for an authenticated client and appends them to the waiting room
     function addClientInterests(res) {
         $.get('/interests', {body: res.tweets})
@@ -58,18 +65,16 @@ $(document).ready(function() {
             });
     }
 
-    // When a client joins, add their username to the waiting room
-    socket.on('client_joined_waiting_room', function(user) {
-        $('#users_waiting_list').append('<li class="user_list_item" id="client_list_item" data-user-index="' + user.user_index + '">' + user.user_name + ' (You!)</li>');
-    });
-
-    // When a client joins, get the other users in the waiting room
-    socket.on('get_other_users_in_waiting_room', function(users) {
+    // When a client joins, get all of the other users in the waiting room
+    socket.on('get_users_in_waiting_room', function(users) {
         for(var i = 0; i < users.length; i++) {
-            // If the user is in the waiting room
-            if(users[i].status == "waiting") {
+            // If the user is in the waiting room and isn't the client
+            if(users[i].status == "waiting" && users[i].user_index != client.user_index) {
                 // Append the user to the DOM
-                $('#users_waiting_list').append('<li class="user_list_item" data-username="' + users[i].user_index + '">' + users[i].user_name + '</li>');
+                $('#users_waiting_list').append('<li class="user_list_item" data-user-index="' + users[i].user_index + '">' + users[i].user_name + '</li>');
+            } else if (users[i].status == "waiting" && users[i].user_index == client.user_index) {
+                // If the user is in the waiting room and IS the client, add them as yellow list item
+                $('#users_waiting_list').append('<li class="user_list_item" id="client_list_item" data-user-index="' + users[i].user_index + '">' + users[i].user_name + ' (You!)</li>');
             }
         }
     });

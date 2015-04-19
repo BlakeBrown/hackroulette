@@ -210,16 +210,17 @@ io.sockets.on('connection', function (socket) {
         user.status = "waiting";
         // Store the user in the current connection
         socket.user = user;
+        
+        // Store the user client side
+        socket.emit('store_connected_user', user);
+        // Add the user to the global waiting room list
+        connected_users.push(user);
 
-        // Update the client to let him to know he/she joined
-        socket.emit('client_joined_waiting_room', user);
-        // Update the client with the other people in the waiting room
-        socket.emit('get_other_users_in_waiting_room', connected_users); 
+        // Update the client with all the users in the waiting room
+        socket.emit('get_users_in_waiting_room', connected_users); 
         // Update all the other users (excluding the client) with the new user
         socket.broadcast.emit('user_joined_waiting_room', user);
 
-        // Add the user to the global waiting room list
-        connected_users.push(user);
     });
 
     // Takes in a user object and adds them to the chat
