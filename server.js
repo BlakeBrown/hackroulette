@@ -194,6 +194,7 @@ app.get('/interests', function(req, res1) {
 // =============== SOCKET.IO ==================
 // Global array of users who are connected and are either in the waiting room or chat room
 var connected_users = [];
+var user_count = 0;
 
 // rooms which are currently available in chat
 var rooms = ['room1','room2','room3'];
@@ -203,7 +204,8 @@ io.sockets.on('connection', function (socket) {
     // Takes in a user object and adds them to the waiting list + waiting room
     socket.on('add_client_to_waiting_room', function(user) {
         // Give the user an unique index identifier (since if the same person opens two tabs, we want to consider them as two users even though they have the same authentication ID)
-        user.user_index = connected_users.length; 
+        user.user_index = user_count; 
+        user_count++;
         // Update the user status to "waiting" (in the waiting room)
         user.status = "waiting";
         // Store the user in the current connection
@@ -224,7 +226,8 @@ io.sockets.on('connection', function (socket) {
     socket.on('add_client_to_chat', function(user) {
 
         // Give the user an unique index identifier (since if the same person opens two tabs, we want to consider them as two users even though they have the same authentication ID)
-        user.user_index = connected_users.length; 
+        user.user_index = user_count; 
+        user_count++;
         // Update the user status to "chat" (in the chat room)
         user.status = "chat";
         // Store the user in the socket session
@@ -269,11 +272,11 @@ io.sockets.on('connection', function (socket) {
         if(socket.user) {
             console.log("user left the " + socket.user.status + "room");
             // If the user is in the waiting room, update the other users to show they left
-            if(socket.user.status = "waiting") {
+            if(socket.user.status == "waiting") {
                 socket.broadcast.emit('user_left_waiting_room', socket.user.user_index);
             } else {
                 // Otherwise the client is in the chat room, update the other users to show they left
-                socket.broadcast.emit('send_server_message', socket.user.user_name + ' has disconnected'); 
+                socket.broadcast.emit('send_server_message', socket.user.user_name + ' has left this room'); 
             }
 
             // Remove the user from the global array
