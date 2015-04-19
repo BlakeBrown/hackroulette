@@ -4,14 +4,14 @@ $(document).ready(function() {
 	// Client is the currently connected user
 	var client;
 
-	// On connection, add a user to the chat 
+	// When the socket connects, get the client and add them to the chat
 	socket.on('connect', function() {
 		// Get the client
         $.ajax({
             method: 'get',
             url: 'user',
             success: function(response) {
-                // Add the client to the waiting list
+                // Add the client to the chat
                 socket.emit('add_client_to_chat', response);
             },
             error: function(response) {

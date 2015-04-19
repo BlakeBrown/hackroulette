@@ -196,7 +196,8 @@ app.get('/interests', function(req, res1) {
 var connected_users = [];
 var user_count = 0;
 
-// rooms which are currently available in chat
+// Start the server with one empty room
+var socket_rooms = [{room: "room0", users: []}];
 var rooms = ['room1','room2','room3'];
 
 io.sockets.on('connection', function (socket) {
@@ -237,17 +238,38 @@ io.sockets.on('connection', function (socket) {
         // Add the user to the global chat room list
         connected_users.push(user);
 
+        var room_joined;
+
+        // Join a room if one is available
+        for(var i = 0; i < socket_rooms.length; i++) {
+            // If there are less than 2 people in the room
+            if(socket_rooms[i].users.length < 2) {
+                // Join the room and break from the loop 
+                socket_rooms[i].users.push(user);
+                room_joined = socket_rooms[i].room;
+                break;
+            }
+        }
+
+        // If the user didn't join a room (none were available)
+        if(!room_joined) {
+            // Create a new room and put the user in it
+            var new_room = {room: "room" + socket_rooms.length, users: [user]};
+            socket_rooms.push(new_room);
+            room_joined = new_room.room;
+        }
+
         // Store the room name in the socket session
-        socket.room = 'room1';
+        socket.room = room_joined;
         // Send the client to room 1
-        socket.join('room1');
+        socket.join(room_joined);
         // Tell the client they've connected
-        socket.emit('send_server_message', 'you have connected to room1');
+        socket.emit('send_server_message', 'you have connected to ' + room_joined);
         // Store the user client side
         socket.emit('store_connected_user', user);
         // Tell other users in the room that another user has connected
         socket.broadcast.to('room1').emit('send_server_message', user.user_name + ' has connected to this room');
-        socket.emit('updaterooms', rooms, 'room1');
+        socket.emit('updaterooms', rooms, room_joined);
     });
 
     // when the client emits 'sendchat', this listens and executes
