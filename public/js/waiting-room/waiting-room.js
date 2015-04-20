@@ -59,7 +59,7 @@ $(document).ready(function() {
                 // Append the top 5 tags to the DOM
                 $('.dataText').html('');
                 $('.dataText').append("<strong style='margin-bottom:15px; display:block'>The hacking wizards sense that you are interested in:</strong>");
-                for(var i = 0; i < 5; i++) {
+                for(var i = 0; i < interests.length; i++) {
                     $('.dataText').append("<p style='margin-top:0; margin-bottom:10px'>" + (i+1) + " - " + interests[i].replace(/_/g, " ").capitalizeFirstLetter() + "</p>");
                 }
             });

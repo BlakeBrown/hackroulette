@@ -141,7 +141,7 @@ http.listen(process.env.PORT || 3000, function() {
     console.log('listening on port 3000');
 });
 
-// Gets a users interests from indico's API
+// Gets a users interests from indico's API (for waiting room)
 app.get('/interests', function(req, res1) {
     indico.batchTextTags(req.query.body, indico_settings)
     .then(function(res) {
@@ -166,8 +166,56 @@ app.get('/interests', function(req, res1) {
         for(var key in hash_table) {
             hash_table[key] /= objects.length;
         }
+
         // Result is a hash table of averaged values from indico
         res1.send({interests: hash_table});
+    }).catch(function(err) {
+      console.warn(err);
+    });
+});
+
+// Stores the top 5 interests from indico's API (for chat room)
+app.get('/interests-for-chat', function(req, res1) {
+    indico.batchTextTags(req.query.body, indico_settings)
+    .then(function(res) {
+        var objects = res;
+        var hash_table = {};
+
+        // Loop through the objects, each object contains a a number of key value pairs
+        for(var i = 0; i < objects.length; i++) {
+            // For each key value pair
+            for(var key in objects[i]) {
+                // If our hash table already contains the key, add to its value
+                if(hash_table.hasOwnProperty(key)) {
+                    hash_table[key] += objects[i][key];
+                // Otherwise, set the value
+                } else {
+                    hash_table[key] = objects[i][key];
+                }
+            }
+        }
+
+        // Take the result and average it
+        for(var key in hash_table) {
+            hash_table[key] /= objects.length;
+        }
+
+        // Take the top 5 results
+        var list = hash_table;
+        var interests = [];
+        for(var i = 0; i < 5; i++) {
+            var max = 0;
+            for(var key in list){
+                if(list[key] > max){
+                    interests[i] = key;
+                    max = list[key];
+                }
+            }
+            delete list[interests[i]];
+        }
+
+        // Result is the clients top 5 interests
+        res1.send({interests: interests});
     }).catch(function(err) {
       console.warn(err);
     });
@@ -254,6 +302,24 @@ io.sockets.on('connection', function (socket) {
         socket.emit('store_connected_user', user);
         // Tell other users in the room that another user has connected
         socket.broadcast.to(room_joined).emit('send_server_message', user.user_name + ' has connected to this room');
+        console.log(connected_users);
+    });
+
+    socket.on('store_interests', function(user) {
+        // Store the users interests
+        for(var i = 0; i < connected_users.length; i++) {
+            if(connected_users[i].user_index == user.user_index) {
+                connected_users[i].interests = user.interests;
+            }
+        }
+        // Check if there's two users in the chat (so we can emit their common interests)
+        for(var i = 0; i < socket_rooms.length; i++) {
+            if(socket_rooms[i].room == socket.room) {
+                if(socket_rooms[i].users.length == 2) {
+                    io.sockets.in(socket.room).emit('show_common_interests', socket_rooms[i].users);
+                }
+            }
+        }
     });
 
     // when the client emits 'sendchat', this listens and executes
@@ -281,6 +347,7 @@ io.sockets.on('connection', function (socket) {
                             if(socket_rooms[i].users[j].user_index == socket.user.user_index) {
                                 // Remove the user
                                 socket_rooms[i].users.splice(j, 1);
+                                io.sockets.in(socket.room).emit('user_left_room');
                                 console.log("User removed from " + socket_rooms[i].room);
                             }
                         }

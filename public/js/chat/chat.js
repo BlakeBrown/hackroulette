@@ -4,6 +4,11 @@ $(document).ready(function() {
 	// Client is the currently connected user
 	var client;
 
+	// Custom prototype method to capitalize the first letter of a string
+    String.prototype.capitalizeFirstLetter = function() {
+        return this.charAt(0).toUpperCase() + this.slice(1);
+    }
+
 	// When the socket connects, get the client and add them to the chat
 	socket.on('connect', function() {
 		// Get the client
@@ -20,9 +25,53 @@ $(document).ready(function() {
         })
 	});
 
+    // Gets the clients top 5 interests and stores them
+	function getClientInterests() {
+		$.get('/tweets')
+	        .done(function(response) {
+	            // Feed the list of tweets into Indico's API, getting the related topics/tags
+		        $.get('/interests-for-chat', {body: response.tweets})
+		            .done(function(response2) {
+		            	var interests = response2.interests;
+		            	// Format the top 5 results correctly
+				        for(var i = 0; i < interests.length; i++) {
+				            interests[i] = interests[i].replace(/_/g, " ").capitalizeFirstLetter();
+				        }
+		            	client.interests = interests;
+		                socket.emit('store_interests', client);
+		            });
+	        });
+	}
+
+	// Called when a second user joins a chat room, shows the users common interests
+	socket.on('show_common_interests', function(users) {
+
+		var common_interests = [];
+
+		for(var i = 0; i < users[0].interests.length; i++) {
+			if(users[0].interests[i] == users[1].interests[i]) {
+				common_interests.push(users[0].interests[i]);
+			}
+		}
+
+		if(common_interests.length > 0) {
+			common_interests_string = common_interests.toString().replace(/,/g , ", ");
+			$("#output").html("<span>Common interests: " + common_interests_string + "</span>");
+		} else {
+			$("#output").html("<span>Aw it appears we couldn't find any obvious shared interests in this matchup. Why don't you talk to each other to see if we missed anything?</span>");
+		}
+	});
+
+	// Resets the common interests box
+	socket.on('user_left_room', function() {
+		$("#output").html("<span>Waiting for another user to join... why not open a new tab to talk to yourself if you're bored? :)</span>");
+	});
+
 	// Store the client in a variable
 	socket.on('store_connected_user', function(user) {
 		client = user; 
+        //Get the clients top 5 interests
+        getClientInterests();
 	});	
 
 	// Updates the chat with a message from the server
