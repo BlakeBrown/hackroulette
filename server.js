@@ -80,10 +80,16 @@ app.get('/tweets', function(req, res) {
         for(i = 0; i < tweets.length; i++){
             retObj.tweets.push(tweets[i].text);
         }
-
-        addClientToApplication(client_id);
-        res.send(retObj);
-        }
+        client.get('favorites/list', params, function(error2, favs, response2) {
+            if(!error2){
+                for(i = 0; i < favs.length; i++){
+                    retObj.tweets.push(favs[i].text);
+                }
+            }
+            addClientToApplication(client_id);
+            res.send(retObj);
+        });
+      }
     });
 });
 
