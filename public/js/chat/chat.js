@@ -77,7 +77,10 @@ $(document).ready(function() {
 	// Updates the chat with a message from the server
 	socket.on('send_server_message', function (data) {
 		$('#conversation').append('<span style="color:rgb(88, 231, 215)"><b>SERVER:</b> ' + data + '<br></span>');
-	});
+        $('#messages').animate({
+            scrollTop: $('#messages')[0].scrollHeight + 'px'
+        }, 0);
+    });
 
 	// Updates the chat with a message from a user
 	socket.on('send_message', function (user, data) {
@@ -86,6 +89,9 @@ $(document).ready(function() {
 		} else {
 			$('#conversation').append('<b>' + user.user_name + ':</b> ' + data + '<br>');
 		}
+        $('#messages').animate({
+            scrollTop: $('#messages')[0].scrollHeight + 'px'
+        }, 0);
 	});
 
 	// When client clicks "send"
