@@ -3,7 +3,7 @@ html {
 	padding: 0px;
 	height: 100%;
 	font-size: 14px;
-	font-family: Avenir Next;
+	font-family: 'Lora', serif;
 	background-color: #000;
 	color:#fff;
 }
@@ -11,7 +11,7 @@ html {
 body {
 	margin: 0;
 	height: 100%;
-	font-family: Avenir Next;
+	font-family: 'Lora', serif;
 	overflow: hidden;
 }
 
@@ -30,7 +30,7 @@ form {
 	bottom: 5vh; 
 	width:100vw;
 	position: fixed; 
-	font-family: Avenir Next;
+	font-family: 'Lora', serif;
 	text-align: center;
 }
 
@@ -39,7 +39,7 @@ form {
 	padding: 10px; 
 	width: 70vw; 
 	display: inline-block;
-	font-family: Avenir Next;  
+	font-family: 'Lora', serif; 
 }
 
 .formButton { 
@@ -52,7 +52,7 @@ form {
 	padding-bottom: 9px;
 	display: inline-block;
 	border-radius: 5px;
-	font-family: Avenir Next;
+	font-family: 'Lora', serif;
 	font-size:0.9em;
 }
 
