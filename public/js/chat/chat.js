@@ -97,7 +97,7 @@ $(document).ready(function() {
 	// When client clicks "send"
 	$('#datasend').on("click", function(e) {
 		e.preventDefault();
-		var message = $('#data').val();
+		var message = $('#data').val().replace(/(<([^>]+)>)/ig,"");
 		$('#data').val('');
 		// Update the other users with the message
 		socket.emit('sendchat', message);
