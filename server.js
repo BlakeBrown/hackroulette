@@ -143,8 +143,8 @@ var addClientToApplication = function(user_id) {
     users.push(user);
 }
 
-http.listen(process.env.PORT || 3000, function() {
-    console.log('listening on port 3000');
+http.listen(3001, function() {
+    console.log('listening on port 3001');
 });
 
 // Gets a users interests from indico's API (for waiting room)
