@@ -144,7 +144,7 @@ var addClientToApplication = function(user_id) {
 }
 
 http.listen(3001, function() {
-    console.log('listening on port 3001');
+    console.log('Hackroulette listening on port 3001');
 });
 
 // Gets a users interests from indico's API (for waiting room)
