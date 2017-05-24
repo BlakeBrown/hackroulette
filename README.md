@@ -3,7 +3,7 @@
 
 #### *Placed in the top 16 out of over 62 teams for both hardware and software hacks in HackPrinceton, Spring 2015!*
 
-##### [Visit our ChallengePost](http://challengepost.com/software/hackroulette) or just [try it out](http://hackroulette.xyz)
+##### [Visit our ChallengePost](http://challengepost.com/software/hackroulette) or just [try it out](http://hackroulette.me)
 Want to meet interesting people? Tired of living in a boring consensus bubble? Get matched with someone with opposing views but similar interests and get the conversation flowing
 
 With HackRoulette, we’ve developed a smart anonymous chat platform catered to the smart modern user. HackRoulette re-imagines the way we connect online by pulling your Twitter feed through Indicos artificial intelligence API to discover your interests and political affiliation. We present to you your top interests then pair you with someone with similar interests but opposing viewpoints, give you fun fake aliases, and throw you in a chat-room with random prompts on controversial current issues. Engage in heated intellectual discourse with an opposing interlocutor on HackRoulette!
